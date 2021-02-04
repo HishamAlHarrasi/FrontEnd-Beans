@@ -46,6 +46,16 @@ const EditUserPage = (props) => {
               disabled={disabled}
             />
           </div>
+
+          <div className="form-input">
+            <label className="form-label lbl">Email: </label>
+            <input
+              type="text"
+              className="form-input"
+              value={user.email}
+              disabled={disabled}
+            />
+          </div>
           <button
             type="button"
             className="btn btn-sm btn-danger"

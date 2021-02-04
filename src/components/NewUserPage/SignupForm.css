@@ -1,0 +1,21 @@
+.main-container {
+  text-align: center;
+}
+
+.container-2 {
+  display: inline;
+}
+
+.form-input {
+  margin: 10px;
+}
+
+.lbl {
+  width: 120px;
+  display: inline-block;
+  text-align: left;
+}
+
+.heading {
+  color: #0275d8;
+}

@@ -1,0 +1,17 @@
+.farmprivileges-container {
+  margin-top: 20px;
+}
+
+.table-radio {
+  margin-left: 30px;
+}
+
+.table-radio-label {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.font-awesome-trash:hover {
+  cursor: pointer;
+  color: red;
+}

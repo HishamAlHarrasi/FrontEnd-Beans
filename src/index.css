@@ -1,13 +1,119 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Poppins", sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.container {
+  padding: 20px;
+}
+
+.admin-container {
+  padding-top: 40px;
+}
+
+.not-found {
+  padding-top: 100px;
+  padding-left: 100px;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #0275d8;
+  height: 80px;
+}
+.topnav ul {
+  margin-left: 50px;
+}
+.topnav li {
+  float: left;
+  text-align: center;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 30px;
+  list-style: none;
+}
+
+.topnav a {
+  color: #c4c4c4;
+}
+
+.topnav a:hover {
+  text-decoration: none;
+  color: rgb(218, 218, 218);
+}
+
+.topnav button {
+  font-size: 17px;
+}
+
+.current-path {
+  color: #ffffff;
+}
+
+.admin-main {
+  font-size: 30px;
+}
+
+.admin-main ul {
+  list-style-type: square;
+}
+.admin-main li {
+  padding-top: 10px;
+}
+
+.admin-main a {
+  text-decoration: none;
+}
+
+.logout {
+  margin-left: 600px;
+  color: #ffffff;
+}
+
+.user-table {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.user-blocked {
+  color: red;
+}
+
+.user-active {
+  color: green;
+}
+
+.manage-users span {
+  font-size: 20px;
+  margin-right: 120px;
+}
+
+.go-back {
+  /* Green */
+  border: solid 2px #0275d8;
+  border-radius: 20px;
+  color: white;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+}
+.go-back:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.go-back a:hover {
+  text-decoration: none;
 }

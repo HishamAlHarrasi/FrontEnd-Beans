@@ -40,6 +40,7 @@ class SignupPage extends Component {
 
     let newPrivilege = {
       id: null, // The id of the farm
+      name: null, // The name of the farm
       canControl: false, // If control is true, privilege is control & view, if false privilege is only view
     };
 
@@ -66,15 +67,23 @@ class SignupPage extends Component {
 
     tempUserPrivileges[index].id = newFarmID;
 
+    for (const farm of this.state.farms) {
+      if (farm.id === newFarmID) {
+        tempUserPrivileges[index].name = farm.name;
+      }
+    }
+
     this.setState({ userPrivileges: tempUserPrivileges });
   };
 
-  handleDeletePrivilege = (index) => {
+  handleDeletePrivilege = (userPrivilege) => {
     const { userPrivileges } = this.state;
 
     let tempUserPrivileges = [...userPrivileges];
 
-    tempUserPrivileges.splice(index, 1);
+    tempUserPrivileges = tempUserPrivileges.filter(
+      (filtered) => filtered !== userPrivilege
+    );
 
     this.setState({ userPrivileges: tempUserPrivileges });
   };

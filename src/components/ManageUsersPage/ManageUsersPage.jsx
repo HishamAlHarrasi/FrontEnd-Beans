@@ -25,7 +25,7 @@ class ManageUsersPage extends Component {
         <div className="container">
           <div className="manage-users">
             <h2>Manage Users</h2>
-            <span>Total number of users: {userData.length} </span>
+            <span>Total number of users: {userData.length}</span>
             <span>Click on the username to manage each user individually.</span>
             <UsersTable userData={userData} />
           </div>

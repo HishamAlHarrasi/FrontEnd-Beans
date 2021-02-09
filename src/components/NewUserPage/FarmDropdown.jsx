@@ -3,8 +3,6 @@ import React, { useState } from "react";
 const FarmDropdown = (props) => {
   const { farms, userPrivilege, index, onEditFarm } = props;
 
-  const [currentFarm, setCurrentFarm] = useState(null); // For presentation purposes only - Shows what farm is currently chosen, while the onEditFarm method actually handles moving the data up to the main state
-
   return (
     <div class="dropdown">
       <button
@@ -15,13 +13,9 @@ const FarmDropdown = (props) => {
         aria-haspopup="true"
         aria-expanded="false"
       >
-        {userPrivilege.id === null ? "Choose Remote Farm" : currentFarm}
+        {userPrivilege.id === null ? "Choose Remote Farm" : userPrivilege.name}
       </button>
-      <div
-        class="dropdown-menu"
-        aria-labelledby="dropdownMenuButton"
-        onClick={(event) => setCurrentFarm(event.target.textContent)}
-      >
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {farms.map((farm) => {
           return (
             <a

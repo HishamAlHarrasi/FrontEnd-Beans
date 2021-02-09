@@ -5,6 +5,7 @@ export default function databaseRequest() {
         username: "TheRealBart",
         firstName: "Bart",
         lastName: "Simpson",
+        email: "bartSimp@gmail.com",
         admin: true,
         userPrivileges: [
           {
@@ -27,6 +28,7 @@ export default function databaseRequest() {
         username: "MikeyTysey",
         firstName: "Mike",
         lastName: "Tyson",
+        email: "mikeeeyT@gmail.com",
         admin: false,
         userPrivileges: [
           {
@@ -45,6 +47,7 @@ export default function databaseRequest() {
         username: "MortyS123",
         firstName: "Morty",
         lastName: "Smith",
+        email: "realMorty123@rick.com",
         admin: true,
         userPrivileges: [
           {
@@ -63,6 +66,7 @@ export default function databaseRequest() {
         username: "JDoe",
         firstName: "John",
         lastName: "Doe",
+        email: "johnDoe@hotmail.com",
         admin: false,
         userPrivileges: [
           {
@@ -77,6 +81,7 @@ export default function databaseRequest() {
         username: "SteveSmiiith",
         firstName: "Steven",
         lastName: "Smith",
+        email: "u12345678@warwick.ac.jupiter",
         admin: false,
         userPrivileges: [
           {

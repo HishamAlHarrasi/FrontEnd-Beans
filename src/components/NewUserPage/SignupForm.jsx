@@ -24,6 +24,7 @@ const SignupForm = (props) => {
               type="text"
               className="form-input"
               placeholder="Enter first name.."
+              required
             />
           </div>
           <div className="form-input">
@@ -32,6 +33,7 @@ const SignupForm = (props) => {
               type="text"
               className="form-input"
               placeholder="Enter last name.."
+              required
             />
           </div>
           <div className="form-input">
@@ -40,6 +42,7 @@ const SignupForm = (props) => {
               type="text"
               className="form-input"
               placeholder="Enter username.."
+              required
             />
           </div>
           <div className="form-input">
@@ -48,6 +51,7 @@ const SignupForm = (props) => {
               type="email"
               className="form-input"
               placeholder="Enter email.."
+              required
             />
           </div>
           <div className="form-input">
@@ -56,6 +60,7 @@ const SignupForm = (props) => {
               type="password"
               className="form-input"
               placeholder="Enter password.."
+              required
             />
           </div>
           <div className="form-input">
@@ -64,6 +69,7 @@ const SignupForm = (props) => {
               type="password"
               className="form-input"
               placeholder="Confirm password.."
+              required
             />
           </div>
           <div className="form-input">
@@ -71,7 +77,7 @@ const SignupForm = (props) => {
               type="radio"
               className="form-input"
               name="adminState"
-              checked
+              defaultChecked
             />
             <label className="form-label lbl">Standard User</label>
             <input type="radio" className="form-input" name="adminState" />

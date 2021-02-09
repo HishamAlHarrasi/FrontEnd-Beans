@@ -14,8 +14,6 @@ const FarmPrivileges = (props) => {
     onDeletePrivilege,
   } = props;
 
-  console.log(userPrivileges.canControl);
-
   return (
     <div className="farmprivileges-container">
       <table class="table table-hover" style={{ width: "50%", margin: "auto" }}>
@@ -55,6 +53,7 @@ const FarmPrivileges = (props) => {
                     type="radio"
                     name={index}
                     className="table-radio"
+                    checked={userPrivilege.canControl}
                     onClick={() => onChangeFarmPrivileges(index)} // Changes the access rights - View, or View & Control
                   />
                   <label htmlFor="View" className="table-radio-label">
@@ -65,7 +64,7 @@ const FarmPrivileges = (props) => {
                   <FontAwesomeIcon
                     icon={faTrash}
                     className="font-awesome-trash"
-                    onClick={() => onDeletePrivilege(index)}
+                    onClick={() => onDeletePrivilege(userPrivilege)}
                   />
                 </td>
               </tr>

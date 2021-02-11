@@ -84,14 +84,16 @@ const SignupForm = (props) => {
             <label className="form-label lbl">Admin</label>
           </div>
         </div>
-        <FarmPrivileges
-          farms={farms}
-          userPrivileges={userPrivileges}
-          onCreateNewUserPrivilege={onCreateNewUserPrivilege}
-          onChangeFarmPrivileges={onChangeFarmPrivileges}
-          onEditFarm={onEditFarm}
-          onDeletePrivilege={onDeletePrivilege}
-        />
+        <div className="farm-privileges-table">
+          <FarmPrivileges
+            farms={farms}
+            userPrivileges={userPrivileges}
+            onCreateNewUserPrivilege={onCreateNewUserPrivilege}
+            onChangeFarmPrivileges={onChangeFarmPrivileges}
+            onEditFarm={onEditFarm}
+            onDeletePrivilege={onDeletePrivilege}
+          />
+        </div>
         <button
           className="btn btn-primary"
           style={{ margin: "100px", marginBottom: "200px" }}

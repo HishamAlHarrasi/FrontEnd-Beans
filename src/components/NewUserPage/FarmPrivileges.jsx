@@ -16,7 +16,7 @@ const FarmPrivileges = (props) => {
 
   return (
     <div className="farmprivileges-container">
-      <table class="table table-hover" style={{ width: "50%", margin: "auto" }}>
+      <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col"></th>

@@ -4,7 +4,7 @@ class UsersTable extends Component {
   state = {};
 
   render() {
-    const { userData } = this.props;
+    const { usersData } = this.props;
     return (
       <div className="user-table">
         <table className="table">
@@ -18,7 +18,7 @@ class UsersTable extends Component {
             </tr>
           </thead>
           <tbody>
-            {userData.map((user, index) => {
+            {usersData.map((user, index) => {
               return (
                 <tr>
                   <td>{user.userID}</td>
@@ -26,7 +26,9 @@ class UsersTable extends Component {
                     <Link
                       to={{
                         pathname: `/admin/manageUsers/${user.userID}`,
-                        state: { user: user },
+                        state: {
+                          user: user,
+                        },
                       }}
                     >
                       {user.username}

@@ -10,14 +10,17 @@ export default function databaseRequest() {
         userPrivileges: [
           {
             id: 2,
+            name: "Spain",
             canControl: false,
           },
           {
             id: 3,
+            name: "Peru",
             canControl: true,
           },
           {
             id: 5,
+            name: "Russia",
             canControl: false,
           },
         ],
@@ -33,10 +36,12 @@ export default function databaseRequest() {
         userPrivileges: [
           {
             id: 4,
+            name: "Nepal",
             canControl: false,
           },
           {
             id: 3,
+            name: "Peru",
             canControl: true,
           },
         ],
@@ -52,10 +57,12 @@ export default function databaseRequest() {
         userPrivileges: [
           {
             id: 2,
+            name: "Spain",
             canControl: false,
           },
           {
             id: 1,
+            name: "Algeria",
             canControl: true,
           },
         ],
@@ -71,6 +78,7 @@ export default function databaseRequest() {
         userPrivileges: [
           {
             id: 5,
+            name: "Russia",
             canControl: true,
           },
         ],
@@ -86,6 +94,7 @@ export default function databaseRequest() {
         userPrivileges: [
           {
             id: 4,
+            name: "Nepal",
             canControl: false,
           },
         ],

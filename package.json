@@ -9,7 +9,9 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "joi-browser": "^13.4.0",
     "query-string": "^6.13.8",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
@@ -22,7 +24,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy-production": "react-scripts build && scp -r ./build/* root@46.101.86.121:/var/www/arya-flowers.com/html"
   },
   "eslintConfig": {
     "extends": [

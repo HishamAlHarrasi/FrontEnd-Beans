@@ -3,6 +3,7 @@ import SignupForm from "./SignupForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import Joi from "joi-browser";
 
 class SignupPage extends Component {
   state = {
@@ -30,6 +31,7 @@ class SignupPage extends Component {
       },
     ],
     userPrivileges: [],
+    errors: {},
   };
 
   handleCreateNewPrivilege = () => {
@@ -88,6 +90,51 @@ class SignupPage extends Component {
     this.setState({ userPrivileges: tempUserPrivileges });
   };
 
+  validate = (event, userPrivileges) => {
+    const errors = {};
+
+    const firstName = event.target[0].value;
+    const lastName = event.target[1].value;
+    const username = event.target[2].value;
+    const email = event.target[3].value;
+    const password = event.target[4].value;
+    const password2 = event.target[5].value;
+    const isAdmin = event.target[7].checked;
+    const farmPrivileges = userPrivileges;
+
+    if (firstName.trim() === "") errors.firstName = "First name is required.";
+    if (lastName.trim() === "") errors.lastName = "Last name is required.";
+    if (username.trim() === "") errors.username = "Username is required.";
+    if (email.trim() === "") errors.email = "Email is required.";
+    if (password.trim() === "") {
+      errors.password = "Password is required.";
+    } else if (password.length <= 6) {
+      errors.password = "Password must be at least 8 characters.";
+    }
+    if (password2.trim() === "") {
+      errors.password2 = "Password confirmation is required.";
+    } else if (password !== password2) {
+      errors.password2 = "Passwords are not the same.";
+    }
+
+    for (const index in farmPrivileges) {
+      if (farmPrivileges[index].id === null) {
+        errors.farmPrivileges = "Choose a farm.";
+      } else {
+        for (const index_2 in farmPrivileges) {
+          if (
+            index !== index_2 &&
+            farmPrivileges[index].id === farmPrivileges[index_2].id
+          ) {
+            errors.farmPrivileges = "You have a repeated farm.";
+          }
+        }
+      }
+    }
+
+    return Object.keys(errors).length === 0 ? null : errors;
+  };
+
   handleSubmit = (event, userPrivileges) => {
     event.preventDefault();
 
@@ -100,6 +147,11 @@ class SignupPage extends Component {
       isAdmin: event.target[7].checked,
       farmPrivileges: userPrivileges,
     };
+
+    const errors = this.validate(event, userPrivileges);
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
 
     console.log(userRegisterForm);
   };
@@ -114,8 +166,9 @@ class SignupPage extends Component {
         </div>
         <div className="main-container">
           <SignupForm
-            onSubmit={this.handleSubmit}
             farms={this.state.farms}
+            errors={this.state.errors}
+            onSubmit={this.handleSubmit}
             userPrivileges={this.state.userPrivileges}
             onCreateNewUserPrivilege={this.handleCreateNewPrivilege} // Adds new privilege with no farm choice set
             onChangeFarmPrivileges={this.handleChangeFarmPrivileges} // Changes whether privilege is View, or Control & View

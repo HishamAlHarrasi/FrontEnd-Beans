@@ -4,8 +4,9 @@ import "./SignupForm.css";
 
 const SignupForm = (props) => {
   const {
-    onSubmit,
     farms,
+    errors,
+    onSubmit,
     userPrivileges,
     onCreateNewUserPrivilege,
     onChangeFarmPrivileges,
@@ -15,7 +16,11 @@ const SignupForm = (props) => {
 
   return (
     <div className="main-container">
-      <form className="form" onSubmit={(e) => onSubmit(e, userPrivileges)}>
+      <form
+        className="form"
+        onSubmit={(e) => onSubmit(e, userPrivileges)}
+        noValidate
+      >
         <h1 className="heading">Create User</h1>
         <div className="input-field-shell">
           <div className="form-input">
@@ -26,6 +31,11 @@ const SignupForm = (props) => {
               placeholder="Enter first name.."
               required
             />
+            {errors.firstName && (
+              <div className="alert alert-danger label-width">
+                {errors.firstName}
+              </div>
+            )}
           </div>
           <div className="form-input">
             <label className="form-label lbl">Last Name: </label>
@@ -35,6 +45,11 @@ const SignupForm = (props) => {
               placeholder="Enter last name.."
               required
             />
+            {errors.lastName && (
+              <div className="alert alert-danger label-width">
+                {errors.lastName}
+              </div>
+            )}
           </div>
           <div className="form-input">
             <label className="form-label lbl">Username: </label>
@@ -44,6 +59,11 @@ const SignupForm = (props) => {
               placeholder="Enter username.."
               required
             />
+            {errors.username && (
+              <div className="alert alert-danger label-width">
+                {errors.username}
+              </div>
+            )}
           </div>
           <div className="form-input">
             <label className="form-label lbl">Email: </label>
@@ -53,6 +73,11 @@ const SignupForm = (props) => {
               placeholder="Enter email.."
               required
             />
+            {errors.email && (
+              <div className="alert alert-danger label-width">
+                {errors.email}
+              </div>
+            )}
           </div>
           <div className="form-input">
             <label className="form-label lbl">Password: </label>
@@ -62,6 +87,11 @@ const SignupForm = (props) => {
               placeholder="Enter password.."
               required
             />
+            {errors.password && (
+              <div className="alert alert-danger label-width">
+                {errors.password}
+              </div>
+            )}
           </div>
           <div className="form-input">
             <label className="form-label lbl">Confirm Password: </label>
@@ -71,6 +101,11 @@ const SignupForm = (props) => {
               placeholder="Confirm password.."
               required
             />
+            {errors.password2 && (
+              <div className="alert alert-danger label-width">
+                {errors.password2}
+              </div>
+            )}
           </div>
           <div className="form-input">
             <input
@@ -94,6 +129,11 @@ const SignupForm = (props) => {
             onDeletePrivilege={onDeletePrivilege}
           />
         </div>
+        {errors.farmPrivileges && (
+          <div className="alert alert-danger label-width">
+            {errors.farmPrivileges}
+          </div>
+        )}
         <button
           className="btn btn-primary"
           style={{ margin: "100px", marginBottom: "200px" }}

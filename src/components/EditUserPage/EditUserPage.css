@@ -65,8 +65,24 @@
 
 .apply-changes-button {
   margin-bottom: 10%;
+  text-align: center;
 }
 
 .text-red {
   color: red;
+}
+
+.delete-user {
+  margin-top: 100px;
+  padding: 60px;
+  padding-left: 100px;
+  padding-right: 100px;
+  border: solid 5px red;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.03);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}
+
+.danger-zone-text {
+  margin-bottom: 50px;
 }

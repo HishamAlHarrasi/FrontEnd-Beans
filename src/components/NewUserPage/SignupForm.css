@@ -19,3 +19,8 @@
 .heading {
   color: #0275d8;
 }
+
+.label-width {
+  width: 25%;
+  margin: auto;
+}

@@ -6,6 +6,7 @@ import "./EditUserPage.css";
 import databaseRequestFARMS from "./fakeAPIRequestFARMS";
 import FarmPrivileges from "./../NewUserPage/FarmPrivileges";
 import { Redirect } from "react-router-dom";
+import axios from "axios";
 
 class EditUserPage extends Component {
   state = {
@@ -16,14 +17,28 @@ class EditUserPage extends Component {
     originalUserPrivileges: [],
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({
       user: this.props.location.state.user,
       farms: databaseRequestFARMS(),
       userPrivileges: this.props.location.state.user.userPrivileges,
       originalUserPrivileges: this.props.location.state.user.userPrivileges,
     });
+
+    const { data: apiUsers } = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
+    console.log(apiUsers);
   }
+
+  handleAdd = async () => {
+    const obj = { title: "a", body: "b" };
+    const { data: post } = await axios.post(
+      "https://jsonplaceholder.typicode.com/posts",
+      obj
+    );
+    console.log(post);
+  };
 
   checkChanged = (event, userPrivileges) => {
     event.preventDefault();
@@ -45,7 +60,10 @@ class EditUserPage extends Component {
       changedValues.userPrivileges = userPrivileges;
     }
 
-    console.log(changedValues);
+    if (Object.keys(changedValues).length !== 0) {
+      // Only submits if something has been changed
+      console.log(changedValues);
+    }
     <Link to="/admin/manageUsers" />;
   };
 
@@ -109,6 +127,13 @@ class EditUserPage extends Component {
     this.setState({ userPrivileges: tempUserPrivileges });
   };
 
+  handleChange = (e) => {
+    const user = { ...this.state.user };
+    user[e.currentTarget.name] = e.currentTarget.value;
+
+    this.setState({ user });
+  };
+
   render() {
     const { user, disabled, farms, userPrivileges } = this.state;
 
@@ -124,24 +149,29 @@ class EditUserPage extends Component {
           <div className="flex-container">
             <form id="main-form">
               <div className="flex-child">
-                <div className="form-input">
-                  <p className="text-red">
-                    * Only fill in the fields that you wish to change
-                  </p>
-                  <label className="form-label lbl">User ID: </label>
+                <p className="text-red">
+                  * Only fill in the fields that you wish to change
+                </p>
+                <div className="form-group">
+                  <label for="userID" className="form-label lbl">
+                    User ID:
+                  </label>
                   <input
+                    id="userID"
                     type="text"
                     className="form-input"
                     placeholder={user.userID}
                     disabled
                   />
                   <br />
+
                   <label className="form-label lbl">First Name: </label>
                   <input
                     id="firstname"
                     type="text"
                     className="form-input"
-                    placeholder={user.firstName}
+                    value={user.firstName}
+                    onChange={this.handleChange}
                     disabled={disabled}
                   />
                   <br />
@@ -234,7 +264,7 @@ class EditUserPage extends Component {
               />
             </div>
             <div className="break"></div>
-            <div className="apply-changes-button">
+            <div className="flex-child apply-changes-button">
               <button
                 type="submit"
                 className="btn btn-primary btn-lg"
@@ -243,8 +273,24 @@ class EditUserPage extends Component {
                   this.checkChanged(event, userPrivileges);
                 }}
               >
-                Apply Changes
+                Save & Apply Changes
               </button>
+              <div className="break"></div>
+              <div className="flex-child">
+                <button className="btn btn-danger btn-lg">
+                  Reset Password
+                </button>
+              </div>
+              <div className="break"></div>
+              <div className="delete-user">
+                <h3 className="danger-zone-text">DANGER ZONE</h3>
+                <button
+                  className="btn btn-danger btn-lg"
+                  onClick={this.handleAdd}
+                >
+                  Delete User
+                </button>
+              </div>
             </div>
           </div>
         </div>

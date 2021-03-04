@@ -9,6 +9,7 @@ import FarmsPage from './components/FarmsPage/FarmsPage';
 import ManageUsersPage from './components/ManageUsersPage/ManageUsersPage';
 import EditUserPage from './components/EditUserPage/EditUserPage';
 import LoginPage from './components/LoginPage/LoginPage';
+import ManageFarmPage from './components/ManageFarmPage/ManageFarmPage';
 import {ToastContainer, toast, Zoom, Bounce} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -30,14 +31,7 @@ const App = () => {
   
   
 
-  if (window.location.pathname === "/login") {
-    return (
-      <div>
-          <> <ToastContainer draggable={true} transition={Zoom} autoClose={5000} preventDuplicates/> </>
-          <Route path="/login" component={LoginPage} />
-      </div>
-    )
-  }
+
 
   return (
     <div>
@@ -47,6 +41,7 @@ const App = () => {
       <Navbar />
       <div className="content" >
         <Switch>
+          <Route path="/farms/:id" component={ManageFarmPage} />
           <Route path="/admin/manageUsers/:id" exact component={(props) => <EditUserPage {...props}/>} />
           <Route path="/admin/manageUsers" component={ManageUsersPage} />
           <Route path="/admin/addUser" component={SignupPage} />
@@ -55,7 +50,7 @@ const App = () => {
           <Route path="/notFound" component={NotFound} />
           <Route path="/login" component={(props) => <LoginPage {...props} />} />
           <Route path="/home" exact component={HomePage} />
-          <Redirect to="/login" />
+          <Redirect to="/notFound" />
         </Switch>
       </div>
     

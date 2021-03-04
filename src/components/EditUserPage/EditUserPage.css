@@ -86,3 +86,13 @@
 .danger-zone-text {
   margin-bottom: 50px;
 }
+
+.save {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.save:hover {
+  text-decoration: none;
+  color: #ffffff;
+}

@@ -6,6 +6,7 @@ import "./EditUserPage.css";
 import databaseRequestFARMS from "./fakeAPIRequestFARMS";
 import FarmPrivileges from "./../NewUserPage/FarmPrivileges";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 class EditUserPage extends Component {
   state = {
@@ -169,7 +170,7 @@ class EditUserPage extends Component {
                     id="firstname"
                     type="text"
                     className="form-input"
-                    value={user.firstName}
+                    placeholder={user.firstName}
                     onChange={this.handleChange}
                     disabled={disabled}
                   />
@@ -238,14 +239,26 @@ class EditUserPage extends Component {
                     and check the cause for which the account was blocked in the
                     first place.
                   </p>
-                  <button className="btn btn-md btn-secondary">
+                  <button
+                    className="btn btn-md btn-secondary"
+                    onClick={() => {
+                      toast.success("User Unblocked");
+                    }}
+                  >
                     Unblock User
                   </button>
                 </div>
               ) : (
                 <div>
                   <h5>USER ACTIVE</h5>
-                  <button className="btn btn-md btn-danger">Block User</button>
+                  <button
+                    className="btn btn-md btn-danger"
+                    onClick={() => {
+                      toast.warning("User Blocked");
+                    }}
+                  >
+                    Block User
+                  </button>
                 </div>
               )}
             </div>
@@ -270,10 +283,14 @@ class EditUserPage extends Component {
                 form="main-form"
                 onClick={(event) => {
                   this.checkChanged(event, userPrivileges);
+                  toast.success("Changes Saved Successfully");
                 }}
               >
-                Save & Apply Changes
+                <Link to="/admin/manageUsers" className="save">
+                  Save & Apply Changes
+                </Link>
               </button>
+
               <div className="break"></div>
               <div className="flex-child">
                 <button className="btn btn-danger btn-lg">
@@ -285,7 +302,9 @@ class EditUserPage extends Component {
                 <h3 className="danger-zone-text">DANGER ZONE</h3>
                 <button
                   className="btn btn-danger btn-lg"
-                  onClick={this.handleAdd}
+                  onClick={() => {
+                    toast.error("User Deleted");
+                  }}
                 >
                   Delete User
                 </button>

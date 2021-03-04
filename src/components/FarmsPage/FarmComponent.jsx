@@ -8,7 +8,10 @@ const FarmComponent = (props) => {
     <div className="farm-container">
       <div className="row">
         <div className="column">
-          <div className="inner-row">
+          <div
+            className="inner-row"
+            onClick={() => (window.location = "/farms/1")}
+          >
             <div className="farm-heading">
               <div className="heading-column">
                 Farm Name: <b>exampleText</b>
@@ -20,7 +23,7 @@ const FarmComponent = (props) => {
                 Status: <b>exampleText</b>
                 <FontAwesomeIcon
                   icon={faCircle}
-                  style={{ color: "red", marginLeft: "10px" }}
+                  style={{ color: "#66ff00", marginLeft: "10px" }}
                 />
               </div>
             </div>
@@ -47,7 +50,7 @@ const FarmComponent = (props) => {
                     <FontAwesomeIcon
                       icon={faCircle}
                       style={{
-                        color: "green",
+                        color: "#66ff00",
                         marginTop: "3px",
                         marginLeft: "5px",
                       }}

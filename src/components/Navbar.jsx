@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import logo from "../images/beansIcon.png";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   return (
@@ -26,13 +27,20 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li className="logout">
-            <button className="btn btn-md btn-light">
-              Logout
-              <FontAwesomeIcon
-                icon={faSignOutAlt}
-                style={{ paddingLeft: "5px" }}
-              />
-            </button>
+            <Link to="/login">
+              <button
+                className="btn btn-md btn-light"
+                onClick={() => {
+                  toast.success("Logged Out Successfully");
+                }}
+              >
+                Logout
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                  style={{ paddingLeft: "5px" }}
+                />
+              </button>
+            </Link>
           </li>
         </ul>
       </nav>

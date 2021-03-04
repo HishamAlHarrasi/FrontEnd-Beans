@@ -26,13 +26,15 @@ code {
 
 .topnav {
   overflow: hidden;
+  width: 100%;
   background-color: #0275d8;
   height: 80px;
   box-shadow: 0 6px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
 }
 .topnav ul {
-  margin-left: 50px;
+  margin-left: 80px;
 }
+
 .topnav li {
   float: left;
   text-align: center;
@@ -117,4 +119,27 @@ code {
 
 .go-back a:hover {
   text-decoration: none;
+}
+
+.sidebar-item {
+  display: flex;
+  flex-direction: column;
+  border: white 3px solid;
+  list-style: none;
+  width: 100%;
+  text-align: left;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  color: white;
+}
+
+.sidebar-option {
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#sidebar-top {
+  margin-top: 50px;
 }

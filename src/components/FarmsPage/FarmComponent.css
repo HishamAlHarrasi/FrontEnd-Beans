@@ -1,3 +1,7 @@
+.farm-container {
+  margin-top: 20px;
+  margin-left: 40px;
+}
 .farm-flex {
   display: flex;
   flex-direction: column;
@@ -20,6 +24,7 @@
   flex-wrap: wrap;
   width: 100%;
   align-self: center;
+  cursor: pointer;
 }
 
 .inner-row-heading {
@@ -29,7 +34,7 @@
   width: 100%;
   align-self: center;
   margin: 10px;
-  height: 150px;
+  margin-bottom: 10px;
 }
 
 .column {
@@ -38,7 +43,7 @@
   flex-basis: 100%;
   flex: 1;
   margin: 5px;
-  border: 3px solid #0275d8;
+  border: 2px solid #0275d8;
   border-radius: 3px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 1);
   padding: 5px;
@@ -50,7 +55,7 @@
   flex-basis: 100%;
   flex: 1;
   margin: 5px;
-  border: 3px solid #0275d8;
+  border: 2px solid #0275d8;
   border-radius: 3px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.5);
   padding: 5px;
@@ -74,4 +79,47 @@
   border-radius: 3px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.5);
   justify-content: center;
+}
+
+.farm-heading:hover {
+  background-color: #0257a2;
+}
+
+.general-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 1%;
+  align-self: center;
+  margin-bottom: 30px;
+}
+
+.general-column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  padding: 5px;
+}
+
+.general-row-inner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 1%;
+  align-self: center;
+  margin-bottom: 5px;
+  text-align: center;
+  justify-content: center;
+}
+
+.live-data {
+  text-align: center;
+  font-weight: bold;
+}
+
+#bold {
+  font-weight: bold;
 }

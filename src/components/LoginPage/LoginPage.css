@@ -1,0 +1,33 @@
+.background-image {
+  background-image: url(../../images/markus-spiske-vrbZVyX2k4I-unsplash.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.parent {
+  display: flex;
+}
+
+.form-login {
+  margin: auto;
+  margin-top: 10%;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.form-login h6 {
+  text-align: left;
+}
+
+.input-margin {
+  margin-top: 20px;
+}

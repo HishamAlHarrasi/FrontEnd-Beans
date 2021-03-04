@@ -8,9 +8,41 @@ import AdminPage from './components/AdminPage/AdminPage';
 import FarmsPage from './components/FarmsPage/FarmsPage';
 import ManageUsersPage from './components/ManageUsersPage/ManageUsersPage';
 import EditUserPage from './components/EditUserPage/EditUserPage';
+import LoginPage from './components/LoginPage/LoginPage';
+import {ToastContainer, toast, Zoom, Bounce} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
-function App() {
+let accessToken = "xxxeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4ZGRiNTasasE2ZC01MTdhLTQxYzItYjQ5OC05NTViZDMxNDlhZGMiLCJpYXQiOjE2MTQ3Mjk3MzIasasdsIm5iZiI6MTYxNDcyOTczMiwiZnJlc2giOmZhbHNlLCJzdWIiOiJhZG1pbiIsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE2MTQ3MzAwMzJ9.0pZ33ZPMUdu7OmvlnHNefvkrIDyxCNWP5jHp_pOu2OQ";
+
+axios.interceptors.request.use(
+  config => {
+    config.headers.authorization = `Bearer ${accessToken}`;
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+)
+
+
+const App = () => {
+  
+  
+
+  if (window.location.pathname === "/login") {
+    return (
+      <div>
+          <> <ToastContainer draggable={true} transition={Zoom} autoClose={5000} preventDuplicates/> </>
+          <Route path="/login" component={LoginPage} />
+      </div>
+    )
+  }
+
   return (
+    <div>
+      <> <ToastContainer draggable={false} transition={Zoom} autoClose={5000} preventDuplicates/> </>
+    
     <div>
       <Navbar />
       <div className="content" >
@@ -21,12 +53,14 @@ function App() {
           <Route path="/admin" component={AdminPage} />
           <Route path="/farms" component={FarmsPage} />
           <Route path="/notFound" component={NotFound} />
-          <Route path="/" exact component={HomePage} />
-          <Redirect to="/notFound" />
+          <Route path="/login" component={(props) => <LoginPage {...props} />} />
+          <Route path="/home" exact component={HomePage} />
+          <Redirect to="/login" />
         </Switch>
       </div>
     
     
+    </div>
     </div>
     );
 

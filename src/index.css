@@ -28,6 +28,7 @@ code {
   overflow: hidden;
   background-color: #0275d8;
   height: 80px;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
 }
 .topnav ul {
   margin-left: 50px;

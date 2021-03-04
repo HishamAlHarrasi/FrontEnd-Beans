@@ -5,7 +5,6 @@ import { faArrowLeft, faBan } from "@fortawesome/free-solid-svg-icons";
 import "./EditUserPage.css";
 import databaseRequestFARMS from "./fakeAPIRequestFARMS";
 import FarmPrivileges from "./../NewUserPage/FarmPrivileges";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 class EditUserPage extends Component {

@@ -1,11 +1,19 @@
 import React, { Component } from "react";
+import FarmComponent from "./FarmComponent";
 
-const FarmsPage = () => {
-  return (
-    <div className="container">
-      <h1>Farms & Sensors Page</h1>
-    </div>
-  );
-};
+export default class FarmsPage extends Component {
+  componentDidMount() {
+    console.log("Test");
+  }
 
-export default FarmsPage;
+  render() {
+    return (
+      <div className="container">
+        <h1>Farms Page</h1>
+        <FarmComponent />
+        <FarmComponent />
+        <FarmComponent />
+      </div>
+    );
+  }
+}

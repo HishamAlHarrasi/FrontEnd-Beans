@@ -11,7 +11,7 @@ const Navbar = () => {
       <nav>
         <ul>
           <li>
-            <NavLink exact to="/" activeStyle={{ color: "#ffffff" }}>
+            <NavLink exact to="/home" activeStyle={{ color: "#ffffff" }}>
               Home
             </NavLink>
           </li>

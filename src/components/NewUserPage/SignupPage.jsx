@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Joi from "joi-browser";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 class SignupPage extends Component {
   state = {
@@ -135,7 +137,7 @@ class SignupPage extends Component {
     return Object.keys(errors).length === 0 ? null : errors;
   };
 
-  handleSubmit = (event, userPrivileges) => {
+  handleSubmit = async (event, userPrivileges) => {
     event.preventDefault();
 
     const userRegisterForm = {
@@ -148,11 +150,38 @@ class SignupPage extends Component {
       farmPrivileges: userPrivileges,
     };
 
+    // const userRegisterForm = {
+    //   username: event.target[2].value,
+    //   firstName: event.target[0].value,
+    //   lastName: event.target[1].value,
+    //   email: event.target[3].value,
+    // };
+
     const errors = this.validate(event, userPrivileges);
     this.setState({ errors: errors || {} });
 
     if (errors) return;
 
+    let token =
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlY2MzMzM1Zi1kNmZlLTQ1ODQtODg0NS0wZjdjY2RjYjNlZDMiLCJpYXQiOjE2MTQ3NzUwNzksIm5iZiI6MTYxNDc3NTA3OSwiZnJlc2giOmZhbHNlLCJzdWIiOiJhZG1pbiIsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE2MTQ3NzUzNzl9.55Yl7WPmVDzyh6s7RXdfPBVK91J0eb1J-_da3SxTBbk";
+
+    let headers = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    try {
+      const resp = await axios.get(
+        "http://" + process.env.REACT_APP_server + "/api/farms/all",
+        headers
+      );
+      toast.success("User Submitted");
+      console.log(resp);
+    } catch (err) {
+      toast.error("Error");
+      console.log(err);
+    }
     console.log(userRegisterForm);
   };
 

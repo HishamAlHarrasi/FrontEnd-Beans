@@ -1,14 +1,15 @@
-.row {
+.row-farm-page {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
   padding: 1%;
   align-self: center;
-  margin-bottom: 30px;
+  margin-bottom: 120px;
+  align-content: center;
 }
 
-.column {
+.column-farm-page {
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
@@ -18,4 +19,49 @@
   border-radius: 3px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 1);
   padding: 5px;
+}
+
+.inside-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 40%;
+  align-self: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  background-color: #e8e8e8;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.inside-column {
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  margin: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  align-self: center;
+}
+
+.graph-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 90%;
+  align-self: center;
+  margin-bottom: 30px;
+  justify-content: center;
+  padding: 5px;
+}
+
+.data-class {
+  font-weight: bold;
+  text-align: left;
+}
+
+#live-reading {
+  color: red;
 }

@@ -23,7 +23,7 @@ const FarmComponent = (props) => {
                 Status: <b>exampleText</b>
                 <FontAwesomeIcon
                   icon={faCircle}
-                  style={{ color: "#66ff00", marginLeft: "10px" }}
+                  style={{ color: "#1ec31e", marginLeft: "10px" }}
                 />
               </div>
             </div>
@@ -50,7 +50,7 @@ const FarmComponent = (props) => {
                     <FontAwesomeIcon
                       icon={faCircle}
                       style={{
-                        color: "#66ff00",
+                        color: "#1ec31e",
                         marginTop: "3px",
                         marginLeft: "5px",
                       }}

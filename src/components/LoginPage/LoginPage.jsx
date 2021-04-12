@@ -3,14 +3,6 @@ import "./LoginPage.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-let token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlY2MzMzM1Zi1kNmZlLTQ1ODQtODg0NS0wZjdjY2RjYjNlZDMiLCJpYXQiOjE2MTQ3NzUwNzksIm5iZiI6MTYxNDc3NTA3OSwiZnJlc2giOmZhbHNlLCJzdWIiOiJhZG1pbiIsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE2MTQ3NzUzNzl9.55Yl7WPmVDzyh6s7RXdfPBVK91J0eb1J-_da3SxTBbk";
-
-let headers = {
-  headers: {
-    Authorization: "Bearer " + token,
-  },
-};
 
 class LoginPage extends Component {
   state = {};
@@ -23,11 +15,15 @@ class LoginPage extends Component {
     try {
       const resp = await axios.post(
         "http://" + process.env.REACT_APP_server + "/auth/login",
-        credentials
+        credentials,
+        { withCredentials: true }
       );
       console.log(resp);
       toast.success("Logged in Successfully");
-      //window.location = "/home";
+      window.localStorage.clear()
+      window.localStorage.setItem('access_token', resp.data.access_token )
+      console.log(window.localStorage.getItem('access_token'))
+      window.location = "/home";
     } catch (err) {
       toast.error("Login Failed");
       console.log(err);

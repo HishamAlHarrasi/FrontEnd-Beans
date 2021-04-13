@@ -13,7 +13,7 @@ const FarmDropdown = (props) => {
         aria-haspopup="true"
         aria-expanded="false"
       >
-        {userPrivilege.id === null ? "Choose Remote Farm" : userPrivilege.name}
+        {userPrivilege.id === null ? "Choose Remote Farm" : farms[farms.findIndex(x => x.id === userPrivilege.id)].name + ", " + farms[farms.findIndex(x => x.id === userPrivilege.id)].location}
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {farms.map((farm) => {

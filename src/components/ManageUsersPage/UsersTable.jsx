@@ -22,11 +22,11 @@ class UsersTable extends Component {
             {usersData.map((user, index) => {
               return (
                 <tr>
-                  <td>{user.userID}</td>
+                  <td>{user.id}</td>
                   <td>
                     <Link
                       to={{
-                        pathname: `/admin/manageUsers/${user.userID}`,
+                        pathname: `/admin/manageUsers/${user.id}`,
                         state: {
                           user: user,
                         },
@@ -35,7 +35,7 @@ class UsersTable extends Component {
                       {user.username}
                     </Link>
                   </td>
-                  <td>{user.firstName + " " + user.lastName}</td>
+                  <td>{user.firstname + " " + user.lastname}</td>
                   <td>{user.admin ? "Admin" : "Standard User"}</td>
                   <td
                     className={

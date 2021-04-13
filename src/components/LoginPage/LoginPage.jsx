@@ -13,14 +13,16 @@ class LoginPage extends Component {
     const credentials = `username=${e.target[0].value}&password=${e.target[1].value}`;
 
     try {
+      window.localStorage.clear();
+
       const resp = await axios.post(
         "http://" + process.env.REACT_APP_server + "/auth/login",
         credentials,
         { withCredentials: true }
       );
+
       console.log(resp);
       toast.success("Logged in Successfully");
-      window.localStorage.clear()
       window.localStorage.setItem('access_token', resp.data.access_token )
       console.log(window.localStorage.getItem('access_token'))
       window.location = "/home";

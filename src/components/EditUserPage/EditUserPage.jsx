@@ -8,6 +8,11 @@ import FarmPrivileges from "./../NewUserPage/FarmPrivileges";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const token = window.localStorage.getItem('access_token');
+const config = {
+  headers: { Authorization: `Bearer ${token}` }
+}
+
 class EditUserPage extends Component {
   state = {
     user: {},
@@ -20,25 +25,47 @@ class EditUserPage extends Component {
   async componentDidMount() {
     this.setState({
       user: this.props.location.state.user,
-      farms: databaseRequestFARMS(),
-      userPrivileges: this.props.location.state.user.userPrivileges,
-      originalUserPrivileges: this.props.location.state.user.userPrivileges,
     });
 
-    const { data: apiUsers } = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts"
-    );
-    console.log(apiUsers);
-  }
+    await axios.get("http://" + process.env.REACT_APP_server + "/api/farms/all",
+    config
+    ).then(resp => this.setState({farms: resp.data}))
+    .catch(err => console.log(err));
 
-  handleAdd = async () => {
-    const obj = { title: "a", body: "b" };
-    const { data: post } = await axios.post(
-      "https://jsonplaceholder.typicode.com/posts",
-      obj
-    );
-    console.log(post);
-  };
+    // this.state.user.view_farms.foreach(farm_id => {
+    //   let userPrivilegesClone = [...this.state.userPrivileges];
+    //   userPrivilegesClone.push({
+    //     id: farm_id,
+    //     canControl: false
+    //   })
+
+    // this.setState({ userPrivileges: userPrivilegesClone })
+
+    // })
+
+    for (let farm_id of this.state.user.view_farms) {
+      let userPrivilegesClone = [...this.state.userPrivileges];
+      userPrivilegesClone.push({
+        id: farm_id,
+        canControl: false
+      })
+
+    this.setState({ userPrivileges: userPrivilegesClone })
+    }
+
+    for (let farm_id of this.state.user.control_farms) {
+      let userPrivilegesClone = [...this.state.userPrivileges];
+      userPrivilegesClone.push({
+        id: farm_id,
+        canControl: true
+      })
+
+    this.setState({ userPrivileges: userPrivilegesClone })
+    }
+
+    this.setState({ originalUserPrivileges: this.state.userPrivileges })
+
+  }
 
   checkChanged = (event, userPrivileges) => {
     event.preventDefault();
@@ -160,7 +187,7 @@ class EditUserPage extends Component {
                     id="userID"
                     type="text"
                     className="form-input"
-                    placeholder={user.userID}
+                    placeholder={user.id}
                     disabled
                   />
                   <br />
@@ -170,7 +197,7 @@ class EditUserPage extends Component {
                     id="firstname"
                     type="text"
                     className="form-input"
-                    placeholder={user.firstName}
+                    placeholder={user.firstname}
                     onChange={this.handleChange}
                     disabled={disabled}
                   />
@@ -181,7 +208,7 @@ class EditUserPage extends Component {
                     id="lastname"
                     type="text"
                     className="form-input"
-                    placeholder={user.lastName}
+                    placeholder={user.lastname}
                     contentEditable={true}
                     disabled={disabled}
                   />
@@ -265,7 +292,7 @@ class EditUserPage extends Component {
             <div className="break">
               <hr />
             </div>
-            <div className="flex-child flex-child-table">
+            {this.state.user.admin === false ? <div className="flex-child flex-child-table">
               <FarmPrivileges
                 farms={farms}
                 userPrivileges={userPrivileges}
@@ -274,7 +301,8 @@ class EditUserPage extends Component {
                 onEditFarm={this.handleEditFarm}
                 onDeletePrivilege={this.handleDeletePrivilege}
               />
-            </div>
+            </div> : 
+            <div></div>}
             <div className="break"></div>
             <div className="flex-child apply-changes-button">
               <button

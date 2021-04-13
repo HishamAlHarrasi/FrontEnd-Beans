@@ -17,22 +17,20 @@ class ManageUsersPage extends Component {
   
 
   async componentDidMount() {
-    // this.setState({
-      // usersData: axios.get("http://" + process.env.REACT_APP_server + "/api/farms/all",
-      // // config
-      // ),
-    // });
-    const resp = await axios.get("http://" + process.env.REACT_APP_server + "/api/users/all")
-    console.log(resp)
-    // console.log(this.state.usersData)
+
+      await axios.get("http://" + process.env.REACT_APP_server + "/api/users/all",
+      config
+      ).then(resp => this.setState({ usersData: resp.data }) )
+      .catch(err => console.log(err))
+      
   }
 
   render() {
     const { usersData, farms } = this.state;
-
+    console.log(this.state.usersData)
     return (
       <div>
-        {/* <div className="go-back">
+        <div className="go-back">
           <Link to="/admin">
             Go Back <FontAwesomeIcon icon={faArrowLeft} />
           </Link>
@@ -44,7 +42,7 @@ class ManageUsersPage extends Component {
             <span>Click on the username to manage each user individually.</span>
             <UsersTable usersData={usersData} />
           </div>
-        </div> */}
+        </div>
       </div>
     );
   }

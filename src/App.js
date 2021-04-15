@@ -14,22 +14,8 @@ import {ToastContainer, toast, Zoom, Bounce} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
-let accessToken = "xxxeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4ZGRiNTasasE2ZC01MTdhLTQxYzItYjQ5OC05NTViZDMxNDlhZGMiLCJpYXQiOjE2MTQ3Mjk3MzIasasdsIm5iZiI6MTYxNDcyOTczMiwiZnJlc2giOmZhbHNlLCJzdWIiOiJhZG1pbiIsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE2MTQ3MzAwMzJ9.0pZ33ZPMUdu7OmvlnHNefvkrIDyxCNWP5jHp_pOu2OQ";
-
-// const axiosJWT = axios.create({                        
-  // baseURL: process.env.REACT_APP_server,
-  // headers: {
-    // Authorization: `Bearer ${accessToken}`
-  // }
-// })
-
-
 const App = () => {
   
-  
-
-
-
   return (
     <div>
       <> <ToastContainer draggable={false} transition={Zoom} autoClose={5000} preventDuplicates/> </>

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import databaseRequest from "./fakeAPIRequest";
 import UsersTable from "./UsersTable";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

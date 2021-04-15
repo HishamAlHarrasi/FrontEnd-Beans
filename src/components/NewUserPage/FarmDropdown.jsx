@@ -24,7 +24,7 @@ const FarmDropdown = (props) => {
                 onEditFarm(farm.id, index);
               }}
             >
-              {farm.name}
+              {farm.name + ", " + farm.location}
             </a>
           );
         })}

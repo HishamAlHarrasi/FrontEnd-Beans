@@ -7,34 +7,25 @@ import Joi from "joi-browser";
 import { toast } from "react-toastify";
 import axios from "axios";
 
+const token = window.localStorage.getItem('access_token');
+const config = {
+  headers: { Authorization: `Bearer ${token}` }
+}
+
 class SignupPage extends Component {
   state = {
-    farms: [
-      // Data from API call
-      {
-        id: 1,
-        name: "Algeria",
-      },
-      {
-        id: 2,
-        name: "Spain",
-      },
-      {
-        id: 3,
-        name: "Peru",
-      },
-      {
-        id: 4,
-        name: "Nepal",
-      },
-      {
-        id: 5,
-        name: "Russia",
-      },
-    ],
+    farms: [],
     userPrivileges: [],
     errors: {},
+    passwordResetToken: ''
   };
+
+  componentDidMount() {
+    axios.get("http://" + process.env.REACT_APP_server + "/api/farms/all",
+    config
+    ).then(resp => this.setState({ farms: resp.data }))
+    .catch(err => console.log(err))
+  }
 
   handleCreateNewPrivilege = () => {
     // Probably should change this - View & Control by defenition includes view privilege
@@ -140,49 +131,63 @@ class SignupPage extends Component {
   handleSubmit = async (event, userPrivileges) => {
     event.preventDefault();
 
+    let view_farms = [];
+    let control_farms = [];
+
+    for (let farm of userPrivileges) {
+      if (farm.canControl === false){
+        view_farms.push(farm.id)
+      } else {
+        control_farms.push(farm.id)
+      }
+    }
+
+
     const userRegisterForm = {
-      firstName: event.target[0].value,
-      lastName: event.target[1].value,
+      firstname: event.target[0].value,
+      lastname: event.target[1].value,
       username: event.target[2].value,
       email: event.target[3].value,
-      password: event.target[4].value,
-      isAdmin: event.target[7].checked,
-      farmPrivileges: userPrivileges,
+      admin: event.target[7].checked,
+      view_farms: view_farms,
+      control_farms: control_farms
     };
 
-    // const userRegisterForm = {
-    //   username: event.target[2].value,
-    //   firstName: event.target[0].value,
-    //   lastName: event.target[1].value,
-    //   email: event.target[3].value,
-    // };
-
+    let password = event.target[4].value;
+    
     const errors = this.validate(event, userPrivileges);
     this.setState({ errors: errors || {} });
 
     if (errors) return;
 
-    let token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlY2MzMzM1Zi1kNmZlLTQ1ODQtODg0NS0wZjdjY2RjYjNlZDMiLCJpYXQiOjE2MTQ3NzUwNzksIm5iZiI6MTYxNDc3NTA3OSwiZnJlc2giOmZhbHNlLCJzdWIiOiJhZG1pbiIsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE2MTQ3NzUzNzl9.55Yl7WPmVDzyh6s7RXdfPBVK91J0eb1J-_da3SxTBbk";
+    let request1 = false;
+    let request2 = false;
 
-    let headers = {
-      headers: {
-        Authorization: "Bearer " + token,
+    request1 = await axios.post("http://" + process.env.REACT_APP_server + "/api/users/create",
+    userRegisterForm,
+    config
+    ).then(resp => {this.setState({ passwordResetToken: resp.data.token }); return true})
+    .catch(err => {return false})
+    console.log(request1)
+    // if (request1) {
+      // request2 = await axios.get("http://" + process.env.REACT_APP_server + "/api/users/password/reset",
+      // config)
+      // .then(resp => {console.log(resp) ; return true;})
+      // .catch(err => {console.log(err);return false})
+      // // .then(resp => { this.setState({ passwordResetToken: resp.data.reset_token }) ; return true;})
+    // }
+    console.log(this.state.passwordResetToken)
+    if (request1) {
+      axios.post("http://" + process.env.REACT_APP_server + "/api/users/password",
+      {
+        token: this.state.passwordResetToken,
+        password: password
       },
-    };
-
-    try {
-      const resp = await axios.get(
-        "http://" + process.env.REACT_APP_server + "/api/farms/all",
-        headers
-      );
-      toast.success("User Submitted");
-      console.log(resp);
-    } catch (err) {
-      toast.error("Error");
-      console.log(err);
+      config)
+      .then(resp => console.log(resp))
+      .catch(err => console.log(err))
     }
-    console.log(userRegisterForm);
+    // console.log(userRegisterForm);
   };
 
   render() {

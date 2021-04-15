@@ -39,12 +39,12 @@ class UsersTable extends Component {
                   <td>{user.admin ? "Admin" : "Standard User"}</td>
                   <td
                     className={
-                      user.failedLoginAttempts >= 5
+                      user.user_disabled
                         ? "user-blocked"
                         : "user-active"
                     }
                   >
-                    {user.failedLoginAttempts >= 5 ? "Blocked" : "Active"}
+                    {user.user_disabled ? "Blocked" : "Active"}
                   </td>
                 </tr>
               );

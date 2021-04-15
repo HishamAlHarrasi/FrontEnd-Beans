@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faBan } from "@fortawesome/free-solid-svg-icons";
 import "./EditUserPage.css";
-import databaseRequestFARMS from "./fakeAPIRequestFARMS";
 import FarmPrivileges from "./../NewUserPage/FarmPrivileges";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -248,12 +247,12 @@ class EditUserPage extends Component {
             </form>
             <div
               className={
-                user.failedLoginAttempts >= 5
+                user.user_disabled
                   ? "flex-child flex-child-blocked"
                   : "flex-child flex-child-active"
               }
             >
-              {user.failedLoginAttempts >= 5 ? (
+              {user.user_disabled ? (
                 <div>
                   <h4 className="align-center">
                     User BLOCKED <FontAwesomeIcon icon={faBan} />

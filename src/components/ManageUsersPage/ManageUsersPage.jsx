@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import checkJWT from "../shared/checkJWT";
 
-const token = window.localStorage.getItem('access_token');
-const config = {
-  headers: { Authorization: `Bearer ${token}` }
-}
+let token = "";
+let config = {};
 
 class ManageUsersPage extends Component {
   state = { usersData: [], farms: [] };
@@ -16,6 +15,11 @@ class ManageUsersPage extends Component {
   
 
   async componentDidMount() {
+    await checkJWT();
+    token = window.localStorage.getItem('access_token');
+    config = {
+      headers: { Authorization: `Bearer ${token}` }
+    }
 
       await axios.get("http://" + process.env.REACT_APP_server + "/api/users/all",
       config

@@ -32,8 +32,14 @@ const Navbar = () => {
               <button
                 className="btn btn-md btn-light"
                 onClick={() => {
-                  axios.post("http://" + process.env.REACT_APP_server + "/auth/logout")
-                  toast.success("Logged Out Successfully");
+                  try {
+                    let logout = axios.post("http://" + process.env.REACT_APP_server + "/auth/logout", {}, { withCredentials: "include" })
+                    console.log(logout)
+                    window.localStorage.clear();
+                    toast.success("Logged Out Successfully");
+                  } catch (err) {
+                    console.log(err)
+                  }
                 }}
               >
                 Logout

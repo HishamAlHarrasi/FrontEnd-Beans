@@ -6,11 +6,10 @@ import { Link } from "react-router-dom";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
 import axios from "axios";
+import checkJWT from "../shared/checkJWT"
 
-const token = window.localStorage.getItem('access_token');
-const config = {
-  headers: { Authorization: `Bearer ${token}` }
-}
+let token = "";
+let config = {};
 
 class SignupPage extends Component {
   state = {
@@ -20,11 +19,18 @@ class SignupPage extends Component {
     passwordResetToken: ''
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    await checkJWT()
+    token = window.localStorage.getItem('access_token');
+    config = {
+      headers: { Authorization: `Bearer ${token}` }
+    }
+
     axios.get("http://" + process.env.REACT_APP_server + "/api/farms/all",
     config
     ).then(resp => this.setState({ farms: resp.data }))
     .catch(err => console.log(err))
+
   }
 
   handleCreateNewPrivilege = () => {
@@ -38,6 +44,7 @@ class SignupPage extends Component {
       name: null, // The name of the farm
       canControl: false, // If control is true, privilege is control & view, if false privilege is only view
     };
+    console.log(window.localStorage.getItem('access_token'));
 
     tempUserPrivileges.push(newPrivilege);
 
@@ -82,6 +89,10 @@ class SignupPage extends Component {
 
     this.setState({ userPrivileges: tempUserPrivileges });
   };
+
+  handleChooseAdmin = (isAdmin) => {
+    
+  }
 
   validate = (event, userPrivileges) => {
     const errors = {};
@@ -142,16 +153,29 @@ class SignupPage extends Component {
       }
     }
 
+    let userRegisterForm = {};
 
-    const userRegisterForm = {
-      firstname: event.target[0].value,
-      lastname: event.target[1].value,
-      username: event.target[2].value,
-      email: event.target[3].value,
-      admin: event.target[7].checked,
-      view_farms: view_farms,
-      control_farms: control_farms
-    };
+    if (!event.target[7].checked){
+      userRegisterForm = {
+        firstname: event.target[0].value,
+        lastname: event.target[1].value,
+        username: event.target[2].value,
+        email: event.target[3].value,
+        admin: event.target[7].checked,
+        view_farms: view_farms,
+        control_farms: control_farms
+      };
+    } else {
+      userRegisterForm = {
+        firstname: event.target[0].value,
+        lastname: event.target[1].value,
+        username: event.target[2].value,
+        email: event.target[3].value,
+        admin: event.target[7].checked,
+        view_farms: {},
+        control_farms: {}
+      };
+    }
 
     let password = event.target[4].value;
     
@@ -167,16 +191,8 @@ class SignupPage extends Component {
     userRegisterForm,
     config
     ).then(resp => {this.setState({ passwordResetToken: resp.data.token }); return true})
-    .catch(err => {return false})
-    console.log(request1)
-    // if (request1) {
-      // request2 = await axios.get("http://" + process.env.REACT_APP_server + "/api/users/password/reset",
-      // config)
-      // .then(resp => {console.log(resp) ; return true;})
-      // .catch(err => {console.log(err);return false})
-      // // .then(resp => { this.setState({ passwordResetToken: resp.data.reset_token }) ; return true;})
-    // }
-    console.log(this.state.passwordResetToken)
+    .catch(err => {toast.error("Error. User creation failed."); return false})
+
     if (request1) {
       axios.post("http://" + process.env.REACT_APP_server + "/api/users/password",
       {
@@ -184,10 +200,10 @@ class SignupPage extends Component {
         password: password
       },
       config)
-      .then(resp => console.log(resp))
-      .catch(err => console.log(err))
+      .then(resp => {console.log(resp); window.location = "/admin"; toast.success("Logged in Successfully");
+      })
+      .catch(err => {console.log(err);})
     }
-    // console.log(userRegisterForm);
   };
 
   render() {

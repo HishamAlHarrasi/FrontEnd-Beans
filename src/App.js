@@ -10,16 +10,22 @@ import ManageUsersPage from './components/ManageUsersPage/ManageUsersPage';
 import EditUserPage from './components/EditUserPage/EditUserPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import ManageFarmPage from './components/ManageFarmPage/ManageFarmPage';
+import checkJWT from './components/shared/checkJWT';
 import {ToastContainer, toast, Zoom, Bounce} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 const App = () => {
-  
+
+  let access_token = window.localStorage.getItem('acess_token');
+  let decoded = jwtDecode(access_token);
+
   return (
     <div>
       <> <ToastContainer draggable={false} transition={Zoom} autoClose={5000} preventDuplicates/> </>
-    
+    {
+      window.localStorage.getItem('access_token') !== null ?
     <div>
       <Navbar />
       <div className="content" >
@@ -36,9 +42,17 @@ const App = () => {
           <Redirect to="/notFound" />
         </Switch>
       </div>
-    
-    
     </div>
+      :
+      <div className="content" >
+        <Switch>
+          <Route path="/login" component={(props) => <LoginPage {...props} />} />
+          <Redirect to="/login" />
+        </Switch>
+      </div>
+    
+    
+    }
     </div>
     );
 

@@ -143,3 +143,18 @@ code {
 #sidebar-top {
   margin-top: 50px;
 }
+
+
+.home-page-container {
+  margin-top: 40px;
+}
+
+.user-data-home {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.user-data {
+  margin-left: 30px;
+  font-weight: bold;
+}

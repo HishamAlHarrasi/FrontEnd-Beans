@@ -2,10 +2,15 @@ import React, { Component } from "react";
 import "./LoginPage.css";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import jwtDecode from "jwt-decode";
 
 class LoginPage extends Component {
   state = {};
+
+  // componentDidMount() {
+  //   window.localStorage.clear()  // Prevents bugs on quick logout and login
+  // }
+
 
   login = async (e) => {
     e.preventDefault();
@@ -25,6 +30,7 @@ class LoginPage extends Component {
       toast.success("Logged in Successfully");
       window.localStorage.setItem('access_token', resp.data.access_token )
       console.log(window.localStorage.getItem('access_token'))
+
       window.location = "/home";
     } catch (err) {
       toast.error("Login Failed");

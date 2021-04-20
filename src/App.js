@@ -18,14 +18,14 @@ import jwtDecode from 'jwt-decode';
 
 const App = () => {
 
-  let access_token = window.localStorage.getItem('acess_token');
-  let decoded = jwtDecode(access_token);
+  let access_token = window.localStorage.getItem('access_token');
+  // let decoded = jwtDecode(access_token);
 
   return (
     <div>
       <> <ToastContainer draggable={false} transition={Zoom} autoClose={5000} preventDuplicates/> </>
     {
-      window.localStorage.getItem('access_token') !== null ?
+     window.localStorage.getItem('access_token') !== null ?
     <div>
       <Navbar />
       <div className="content" >

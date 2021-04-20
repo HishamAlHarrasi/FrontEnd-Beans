@@ -31,31 +31,20 @@ class EditUserPage extends Component {
     ).then(resp => this.setState({farms: resp.data}))
     .catch(err => console.log(err));
 
-    // this.state.user.view_farms.foreach(farm_id => {
-    //   let userPrivilegesClone = [...this.state.userPrivileges];
-    //   userPrivilegesClone.push({
-    //     id: farm_id,
-    //     canControl: false
-    //   })
-
-    // this.setState({ userPrivileges: userPrivilegesClone })
-
-    // })
-
-    for (let farm_id of this.state.user.view_farms) {
+    for (let farm of this.state.user.view_farms) {
       let userPrivilegesClone = [...this.state.userPrivileges];
       userPrivilegesClone.push({
-        id: farm_id,
+        id: farm.id,
         canControl: false
       })
 
-    this.setState({ userPrivileges: userPrivilegesClone })
+      this.setState({ userPrivileges: userPrivilegesClone })
     }
 
-    for (let farm_id of this.state.user.control_farms) {
+    for (let farm of this.state.user.control_farms) {
       let userPrivilegesClone = [...this.state.userPrivileges];
       userPrivilegesClone.push({
-        id: farm_id,
+        id: farm.id,
         canControl: true
       })
 

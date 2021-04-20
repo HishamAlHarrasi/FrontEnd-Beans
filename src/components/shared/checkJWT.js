@@ -10,8 +10,19 @@ const checkJWT = async () => {
       headers: { Authorization: `Bearer ${token}`, withCredentials: true }
     }
 
-    let decoded = jwt_decode(token);
-    let currentTime = (new Date().getTime() + 1) / 1000;
+    let decoded = {}
+    let currentTime = 0;
+
+    try {
+      decoded = jwt_decode(token);
+      currentTime = (new Date().getTime() + 1) / 1000;
+    } catch (err) {
+      console.log(err);
+      window.localStorage.clear();
+      window.location = "/login";
+      return false;
+    }
+    
 
       if (currentTime >= decoded.exp) {
         try {
@@ -27,8 +38,8 @@ const checkJWT = async () => {
       }
 
     } else {
-      window.location = "/login";
       window.localStorage.clear()
+      window.location = "/login";
     }
 
 } 

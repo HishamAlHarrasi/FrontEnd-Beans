@@ -18,6 +18,11 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/admin" activeStyle={{ color: "#ffffff" }}>
+              Admin
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/farms" activeStyle={{ color: "#ffffff" }}>
               Farms & Sensors
             </NavLink>

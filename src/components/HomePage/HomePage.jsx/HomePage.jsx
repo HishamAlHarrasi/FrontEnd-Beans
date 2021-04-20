@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import React, { Component } from "react";
 import checkJWT from "../../shared/checkJWT";
 
@@ -20,6 +21,7 @@ class HomePage extends Component {
       ).then(resp => this.setState({ userData: resp.data }) )
       .catch(err => console.log(err))
       
+      console.log(jwtDecode(token))
   }
 
   render() {

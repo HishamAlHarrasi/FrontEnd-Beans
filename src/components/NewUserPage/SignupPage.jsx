@@ -172,8 +172,8 @@ class SignupPage extends Component {
         username: event.target[2].value,
         email: event.target[3].value,
         admin: event.target[7].checked,
-        view_farms: {},
-        control_farms: {}
+        view_farms: [],
+        control_farms: []
       };
     }
 
@@ -186,12 +186,14 @@ class SignupPage extends Component {
 
     let request1 = false;
     let request2 = false;
-
+    console.log(userRegisterForm)
     request1 = await axios.post("http://" + process.env.REACT_APP_server + "/api/users/create",
     userRegisterForm,
     config
     ).then(resp => {this.setState({ passwordResetToken: resp.data.token }); return true})
     .catch(err => {toast.error("Error. User creation failed."); return false})
+
+    console.log(this.state.passwordResetToken, password)
 
     if (request1) {
       axios.post("http://" + process.env.REACT_APP_server + "/api/users/password",

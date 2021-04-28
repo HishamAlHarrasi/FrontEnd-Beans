@@ -6,6 +6,7 @@ import "./EditUserPage.css";
 import FarmPrivileges from "./../NewUserPage/FarmPrivileges";
 import axios from "axios";
 import { toast } from "react-toastify";
+import checkJWT from "../shared/checkJWT";
 
 const token = window.localStorage.getItem('access_token');
 const config = {
@@ -22,6 +23,7 @@ class EditUserPage extends Component {
   };
 
   async componentDidMount() {
+    checkJWT()
     this.setState({
       user: this.props.location.state.user,
     });
@@ -78,8 +80,10 @@ class EditUserPage extends Component {
     if (Object.keys(changedValues).length !== 0) {
       // Only submits if something has been changed
       console.log(changedValues);
+      // <Link to="/admin/manageUsers" />;
+    } else {
+      
     }
-    <Link to="/admin/manageUsers" />;
   };
 
   handleEnable = () => {
@@ -315,7 +319,7 @@ class EditUserPage extends Component {
               </div>
               <div className="break"></div>
               <div className="delete-user">
-                <h3 className="danger-zone-text">DANGER ZONE</h3>
+                <h3 className="danger-zone-text"><b>DANGER ZONE</b></h3>
                 <button
                   className="btn btn-danger btn-lg"
                   onClick={() => {

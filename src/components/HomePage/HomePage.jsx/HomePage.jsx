@@ -30,6 +30,7 @@ class HomePage extends Component {
         <div className="home-page-container">
           <h3><b>Personal Information</b></h3>
             <div className="user-data-home">
+            User ID: <span className="user-data">{this.state.userData.id}</span><br/><br/>
             Username: <span className="user-data">{this.state.userData.username}</span><br/><br/>
             First Name: <span className="user-data">{this.state.userData.firstname}</span><br/><br/>
             Last Name: <span className="user-data">{this.state.userData.lastname}</span><br/><br/>

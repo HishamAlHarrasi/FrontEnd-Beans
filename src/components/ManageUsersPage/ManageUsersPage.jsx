@@ -10,7 +10,7 @@ let token = "";
 let config = {};
 
 class ManageUsersPage extends Component {
-  state = { usersData: [], farms: [] };
+  state = { usersData: [] };
 
   
 
@@ -29,8 +29,7 @@ class ManageUsersPage extends Component {
   }
 
   render() {
-    const { usersData, farms } = this.state;
-    console.log(this.state.usersData)
+    const { usersData } = this.state;
     return (
       <div>
         <div className="go-back">

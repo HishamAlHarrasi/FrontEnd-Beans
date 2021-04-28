@@ -16,9 +16,7 @@ class Navbar extends Component {
   componentDidMount() {
     let jwt = window.localStorage.getItem('access_token')
     let decoded = jwtDecode(jwt)
-    console.log(decoded.sub)
-    this.setState({ token: jwt, isAdmin: decoded.sub })
-    
+    this.setState({ token: jwt, isAdmin: decoded.admin })
   }
 
   render() {
@@ -31,7 +29,7 @@ class Navbar extends Component {
                 Home
               </NavLink>
             </li>
-            {this.state.isAdmin === 'admin' ?
+            {this.state.isAdmin ?
             <li>
               <NavLink to="/admin" activeStyle={{ color: "#ffffff" }}>
                 Admin

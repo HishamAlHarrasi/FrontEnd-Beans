@@ -12,6 +12,9 @@ import {
   Line,
   Tooltip,
 } from "recharts";
+import checkJWT from "../shared/checkJWT";
+
+
 export default class ManageFarmPage extends Component {
   render() {
     const data = [
@@ -58,6 +61,7 @@ export default class ManageFarmPage extends Component {
         amt: 2100,
       },
     ];
+    checkJWT()
     return (
       <div>
         <div className="go-back">

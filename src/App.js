@@ -26,7 +26,7 @@ const App = () => {
       <> <ToastContainer draggable={false} transition={Zoom} autoClose={5000} preventDuplicates/> </>
     {
      window.localStorage.getItem('access_token') !== null ? 
-    (jwtDecode(window.localStorage.getItem('access_token')).sub == "admin" ?
+    (jwtDecode(window.localStorage.getItem('access_token')).admin ?
     <div>
       <Navbar />
       <div className="content" >
@@ -40,7 +40,8 @@ const App = () => {
           <Route path="/notFound" component={NotFound} />
           <Route path="/login" component={(props) => <LoginPage {...props} />} />
           <Route path="/home" exact component={HomePage} />
-          <Redirect to="/notFound" />
+          {window.location.pathname === "/" ? <Redirect to="/home" /> : <Redirect to="/notFound" />}
+          
         </Switch>
       </div>
     </div> : 

@@ -3,13 +3,14 @@ import "./LoginPage.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
+import checkJWT from "../shared/checkJWT";
 
 class LoginPage extends Component {
   state = {};
 
-  // componentDidMount() {
-  //   window.localStorage.clear()  // Prevents bugs on quick logout and login
-  // }
+// async componentDidMount() {
+//   await checkJWT()  
+// }
 
 
   login = async (e) => {
@@ -42,7 +43,7 @@ class LoginPage extends Component {
     return (
       <div className="background-image">
         <div className="container login-page-bg">
-          <div className="form-input parent">
+          <div className="form-input parent" data-testid="login-1">
             <form className="form-login" onSubmit={(e) => this.login(e)}>
               <h3>Welcome to Beans</h3>
               <label className="form-label lbl">Username: </label>

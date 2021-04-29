@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faBan } from "@fortawesome/free-solid-svg-icons";
 import "./EditUserPage.css";
@@ -7,11 +7,12 @@ import FarmPrivileges from "./../NewUserPage/FarmPrivileges";
 import axios from "axios";
 import { toast } from "react-toastify";
 import checkJWT from "../shared/checkJWT";
+import { Divider } from "@material-ui/core";
 
-const token = window.localStorage.getItem('access_token');
+const token = window.localStorage.getItem("access_token");
 const config = {
-  headers: { Authorization: `Bearer ${token}` }
-}
+  headers: { Authorization: `Bearer ${token}` },
+};
 
 class EditUserPage extends Component {
   state = {
@@ -20,52 +21,60 @@ class EditUserPage extends Component {
     farms: [],
     userPrivileges: [],
     originalUserPrivileges: [],
+    currentAdminID: null,
   };
 
   async componentDidMount() {
-    checkJWT()
+    checkJWT();
     this.setState({
       user: this.props.location.state.user,
     });
 
-    await axios.get("http://" + process.env.REACT_APP_server + "/api/farms/all",
-    config
-    ).then(resp => this.setState({farms: resp.data}))
-    .catch(err => console.log(err));
+    await axios
+      .get("http://" + process.env.REACT_APP_server + "/api/users/me", config)
+      .then((resp) => {
+        console.log(resp);
+        this.setState({ currentAdminID: resp.data.id });
+      })
+      .catch((err) => console.log(err));
+
+    await axios
+      .get("http://" + process.env.REACT_APP_server + "/api/farms/all", config)
+      .then((resp) => this.setState({ farms: resp.data }))
+      .catch((err) => console.log(err));
 
     for (let farm of this.state.user.view_farms) {
       let userPrivilegesClone = [...this.state.userPrivileges];
       userPrivilegesClone.push({
         id: farm.id,
-        canControl: false
-      })
+        canControl: false,
+      });
 
-      this.setState({ userPrivileges: userPrivilegesClone })
+      this.setState({ userPrivileges: userPrivilegesClone });
     }
 
     for (let farm of this.state.user.control_farms) {
       let userPrivilegesClone = [...this.state.userPrivileges];
       userPrivilegesClone.push({
         id: farm.id,
-        canControl: true
-      })
+        canControl: true,
+      });
 
-    this.setState({ userPrivileges: userPrivilegesClone })
+      this.setState({ userPrivileges: userPrivilegesClone });
     }
 
-    this.setState({ originalUserPrivileges: this.state.userPrivileges })
-
+    this.setState({ originalUserPrivileges: this.state.userPrivileges });
   }
 
-  checkChanged = (event, userPrivileges) => {
+  checkChangedAndSubmit = async (event, userPrivileges) => {
     event.preventDefault();
     let changedValues = {};
 
     if (document.getElementById("firstname").value !== "") {
-      changedValues.firstName = document.getElementById("firstname").value;
+      changedValues.firstname = document.getElementById("firstname").value;
     }
     if (document.getElementById("lastname").value !== "") {
-      changedValues.lastName = document.getElementById("lastname").value;
+      changedValues.lastname = document.getElementById("lastname").value;
     }
     if (document.getElementById("username").value !== "") {
       changedValues.username = document.getElementById("username").value;
@@ -74,15 +83,46 @@ class EditUserPage extends Component {
       changedValues.email = document.getElementById("email").value;
     }
     if (userPrivileges !== this.state.originalUserPrivileges) {
-      changedValues.userPrivileges = userPrivileges;
+      changedValues.view_farms = [];
+      changedValues.control_farms = [];
+      for (let farm of userPrivileges) {
+        if (farm.canControl === false) {
+          changedValues.view_farms.push(farm.id);
+        } else {
+          changedValues.control_farms.push(farm.id);
+        }
+      }
     }
 
     if (Object.keys(changedValues).length !== 0) {
-      // Only submits if something has been changed
-      console.log(changedValues);
-      // <Link to="/admin/manageUsers" />;
+      changedValues.id = this.state.user.id;
+      await axios
+        .post(
+          "http://" + process.env.REACT_APP_server + "/api/users/update",
+          changedValues,
+          config
+        )
+        .then((resp) => {
+          console.log(changedValues);
+          if (
+            this.state.user.id === this.state.currentAdminID &&
+            changedValues.username
+          ) {
+            window.localStorage.removeItem("access_token");
+            window.location = "/login";
+            toast.success("User updated successfully.");
+          } else {
+            window.location = "/admin/manageUsers";
+            toast.success("User updated successfully.");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("User update failed.");
+          console.log(changedValues);
+        });
     } else {
-      
+      toast.error("You have not made any changes.");
     }
   };
 
@@ -154,7 +194,13 @@ class EditUserPage extends Component {
   };
 
   render() {
-    const { user, disabled, farms, userPrivileges } = this.state;
+    const {
+      user,
+      disabled,
+      farms,
+      userPrivileges,
+      currentAdminID,
+    } = this.state;
 
     return (
       <div>
@@ -180,6 +226,18 @@ class EditUserPage extends Component {
                     type="text"
                     className="form-input"
                     placeholder={user.id}
+                    disabled
+                  />
+                  <br />
+
+                  <label for="admin" className="form-label lbl">
+                    Admin:
+                  </label>
+                  <input
+                    id="admin"
+                    type="text"
+                    className="form-input"
+                    placeholder={user.admin ? "True" : "False"}
                     disabled
                   />
                   <br />
@@ -226,15 +284,19 @@ class EditUserPage extends Component {
                     disabled={disabled}
                   />
                   <br />
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-danger"
-                    onClick={() => {
-                      this.handleEnable();
-                    }}
-                  >
-                    Click to Edit User
-                  </button>
+                  {user.admin === false || user.id === currentAdminID ? (
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-danger"
+                      onClick={() => {
+                        this.handleEnable();
+                      }}
+                    >
+                      Click to Edit User
+                    </button>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
               </div>
             </form>
@@ -258,77 +320,140 @@ class EditUserPage extends Component {
                     and check the cause for which the account was blocked in the
                     first place.
                   </p>
-                  <button
-                    className="btn btn-md btn-secondary"
-                    onClick={() => {
-                      toast.success("User Unblocked");
-                    }}
-                  >
-                    Unblock User
-                  </button>
+                  {user.admin == false ? (
+                    <button
+                      className="btn btn-md btn-secondary"
+                      onClick={async () => {
+                        await axios
+                          .post(
+                            "http://" +
+                              process.env.REACT_APP_server +
+                              `/api/users/${user.id}/unblock`,
+                            {},
+                            config
+                          )
+                          .then((resp) => {
+                            window.location = "/admin/manageUsers";
+                            toast.success("User unblocked successfully.");
+                          })
+                          .catch((err) => toast.error("User unblock failed."));
+                      }}
+                    >
+                      Unblock User
+                    </button>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
               ) : (
                 <div>
                   <h5>USER ACTIVE</h5>
-                  <button
-                    className="btn btn-md btn-danger"
-                    onClick={() => {
-                      toast.warning("User Blocked");
-                    }}
-                  >
-                    Block User
-                  </button>
+                  {user.admin == false ? (
+                    <button
+                      className="btn btn-md btn-danger"
+                      onClick={async () => {
+                        await axios
+                          .post(
+                            "http://" +
+                              process.env.REACT_APP_server +
+                              `/api/users/${user.id}/block`,
+                            {},
+                            config
+                          )
+                          .then((resp) => {
+                            window.location = "/admin/manageUsers";
+                            toast.success("User blocked successfully.");
+                          })
+                          .catch((err) => toast.error("User block failed."));
+                      }}
+                    >
+                      Block User
+                    </button>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
               )}
             </div>
-            <div className="break">
-              <hr />
-            </div>
-            {this.state.user.admin === false ? <div className="flex-child flex-child-table">
-              <FarmPrivileges
-                farms={farms}
-                userPrivileges={userPrivileges}
-                onCreateNewUserPrivilege={this.handleCreateNewPrivilege}
-                onChangeFarmPrivileges={this.handleChangeFarmPrivileges}
-                onEditFarm={this.handleEditFarm}
-                onDeletePrivilege={this.handleDeletePrivilege}
-              />
-            </div> : 
-            <div></div>}
+            {user.admin === false ? (
+              <div className="flex-child flex-child-table">
+                <div className="break">
+                  <hr />
+                </div>
+                <FarmPrivileges
+                  farms={farms}
+                  userPrivileges={userPrivileges}
+                  onCreateNewUserPrivilege={this.handleCreateNewPrivilege}
+                  onChangeFarmPrivileges={this.handleChangeFarmPrivileges}
+                  onEditFarm={this.handleEditFarm}
+                  onDeletePrivilege={this.handleDeletePrivilege}
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
             <div className="break"></div>
             <div className="flex-child apply-changes-button">
-              <button
-                type="submit"
-                className="btn btn-primary btn-lg"
-                form="main-form"
-                onClick={(event) => {
-                  this.checkChanged(event, userPrivileges);
-                  toast.success("Changes Saved Successfully");
-                }}
-              >
-                <Link to="/admin/manageUsers" className="save">
-                  Save & Apply Changes
-                </Link>
-              </button>
+              {user.admin === false || user.id === currentAdminID ? (
+                <div>
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-lg"
+                    form="main-form"
+                    onClick={(event) => {
+                      this.checkChangedAndSubmit(event, userPrivileges);
+                    }}
+                  >
+                    Save & Apply Changes
+                  </button>
+                  {user.id === currentAdminID ? (
+                    <h5 style={{ marginTop: "30px" }}>
+                      <b> Note:</b> Changing your own username will cause a
+                      force logout.
+                    </h5>
+                  ) : (
+                    <div></div>
+                  )}
+                  <div className="break"></div>
+                  <div className="break"></div>
 
-              <div className="break"></div>
-              <div className="flex-child">
-                <button className="btn btn-danger btn-lg">
-                  Reset Password
-                </button>
-              </div>
-              <div className="break"></div>
-              <div className="delete-user">
-                <h3 className="danger-zone-text"><b>DANGER ZONE</b></h3>
-                <button
-                  className="btn btn-danger btn-lg"
-                  onClick={() => {
-                    toast.error("User Deleted");
-                  }}
-                >
-                  Delete User
-                </button>
-              </div>
+                  {user.admin === false ? (
+                    <div className="delete-user">
+                      <h3 className="danger-zone-text">
+                        <b>DANGER ZONE</b>
+                      </h3>
+                      <button
+                        className="btn btn-danger btn-lg"
+                        onClick={async () => {
+                          await axios
+                            .post(
+                              "http://" +
+                                process.env.REACT_APP_server +
+                                `/api/users/${user.id}/delete`,
+                              {},
+                              config
+                            )
+                            .then((resp) => {
+                              window.location = "/admin/manageUsers";
+                              toast.success("User unblocked successfully.");
+                            })
+                            .catch((err) => toast.error("User delete failed."));
+                        }}
+                      >
+                        Delete User
+                      </button>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  <h4>
+                    Managing another administators account is not allowed.
+                  </h4>
+                </div>
+              )}
             </div>
           </div>
         </div>

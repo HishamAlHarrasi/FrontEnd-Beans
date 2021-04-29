@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
 import axios from "axios";
-import checkJWT from "../shared/checkJWT"
+import checkJWT from "../shared/checkJWT";
 
 let token = "";
 let config = {};
@@ -16,21 +16,20 @@ class SignupPage extends Component {
     farms: [],
     userPrivileges: [],
     errors: {},
-    passwordResetToken: ''
+    passwordResetToken: "",
   };
 
   async componentDidMount() {
-    await checkJWT()
-    token = window.localStorage.getItem('access_token');
+    await checkJWT();
+    token = window.localStorage.getItem("access_token");
     config = {
-      headers: { Authorization: `Bearer ${token}` }
-    }
+      headers: { Authorization: `Bearer ${token}` },
+    };
 
-    axios.get("http://" + process.env.REACT_APP_server + "/api/farms/all",
-    config
-    ).then(resp => this.setState({ farms: resp.data }))
-    .catch(err => console.log(err))
-
+    axios
+      .get("http://" + process.env.REACT_APP_server + "/api/farms/all", config)
+      .then((resp) => this.setState({ farms: resp.data }))
+      .catch((err) => console.log(err));
   }
 
   handleCreateNewPrivilege = () => {
@@ -44,7 +43,7 @@ class SignupPage extends Component {
       name: null, // The name of the farm
       canControl: false, // If control is true, privilege is control & view, if false privilege is only view
     };
-    console.log(window.localStorage.getItem('access_token'));
+    console.log(window.localStorage.getItem("access_token"));
 
     tempUserPrivileges.push(newPrivilege);
 
@@ -90,9 +89,7 @@ class SignupPage extends Component {
     this.setState({ userPrivileges: tempUserPrivileges });
   };
 
-  handleChooseAdmin = (isAdmin) => {
-    
-  }
+  handleChooseAdmin = (isAdmin) => {};
 
   validate = (event, userPrivileges) => {
     const errors = {};
@@ -146,16 +143,16 @@ class SignupPage extends Component {
     let control_farms = [];
 
     for (let farm of userPrivileges) {
-      if (farm.canControl === false){
-        view_farms.push(farm.id)
+      if (farm.canControl === false) {
+        view_farms.push(farm.id);
       } else {
-        control_farms.push(farm.id)
+        control_farms.push(farm.id);
       }
     }
 
     let userRegisterForm = {};
 
-    if (!event.target[7].checked){
+    if (!event.target[7].checked) {
       userRegisterForm = {
         firstname: event.target[0].value,
         lastname: event.target[1].value,
@@ -163,7 +160,7 @@ class SignupPage extends Component {
         email: event.target[3].value,
         admin: event.target[7].checked,
         view_farms: view_farms,
-        control_farms: control_farms
+        control_farms: control_farms,
       };
     } else {
       userRegisterForm = {
@@ -173,12 +170,12 @@ class SignupPage extends Component {
         email: event.target[3].value,
         admin: event.target[7].checked,
         view_farms: [],
-        control_farms: []
+        control_farms: [],
       };
     }
 
     let password = event.target[4].value;
-    
+
     const errors = this.validate(event, userPrivileges);
     this.setState({ errors: errors || {} });
 
@@ -186,25 +183,42 @@ class SignupPage extends Component {
 
     let request1 = false;
     let request2 = false;
-    console.log(userRegisterForm)
-    request1 = await axios.post("http://" + process.env.REACT_APP_server + "/api/users/create",
-    userRegisterForm,
-    config
-    ).then(resp => {this.setState({ passwordResetToken: resp.data.token }); return true})
-    .catch(err => {toast.error("Error. User creation failed."); return false})
+    console.log(userRegisterForm);
+    request1 = await axios
+      .post(
+        "http://" + process.env.REACT_APP_server + "/api/users/create",
+        userRegisterForm,
+        config
+      )
+      .then((resp) => {
+        this.setState({ passwordResetToken: resp.data.token });
+        return true;
+      })
+      .catch((err) => {
+        toast.error("Error. User creation failed.");
+        return false;
+      });
 
-    console.log(this.state.passwordResetToken, password)
+    console.log(this.state.passwordResetToken, password);
 
     if (request1) {
-      axios.post("http://" + process.env.REACT_APP_server + "/api/users/password",
-      {
-        token: this.state.passwordResetToken,
-        password: password
-      },
-      config)
-      .then(resp => {console.log(resp); window.location = "/admin"; toast.success("Logged in Successfully");
-      })
-      .catch(err => {console.log(err);})
+      axios
+        .post(
+          "http://" + process.env.REACT_APP_server + "/api/users/password",
+          {
+            token: this.state.passwordResetToken,
+            password: password,
+          },
+          config
+        )
+        .then((resp) => {
+          console.log(resp);
+          window.location = "/admin/manageUsers";
+          toast.success("User account created successfully!");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 

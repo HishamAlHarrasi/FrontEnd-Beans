@@ -115,7 +115,12 @@ const SignupForm = (props) => {
               defaultChecked
             />
             <label className="form-label lbl">Standard User</label>
-            <input type="radio" className="form-input" name="adminState" id="admin" />
+            <input
+              type="radio"
+              className="form-input"
+              name="adminState"
+              id="admin"
+            />
             <label className="form-label lbl">Admin</label>
           </div>
         </div>

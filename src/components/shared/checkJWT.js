@@ -38,7 +38,7 @@ const checkJWT = async () => {
       }
 
     } else {
-      window.localStorage.clear()
+      window.localStorage.clear();
       window.location = "/login";
     }
 

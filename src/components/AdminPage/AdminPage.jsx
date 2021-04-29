@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import checkJWT from "../shared/checkJWT";
 
 const AdminPage = () => {
-  checkJWT()
+  checkJWT();
   return (
     <div className="container">
       <div className="admin-container" data-testid="login-1">

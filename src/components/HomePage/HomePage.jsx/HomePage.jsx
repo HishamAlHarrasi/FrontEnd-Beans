@@ -11,31 +11,47 @@ class HomePage extends Component {
 
   async componentDidMount() {
     await checkJWT();
-    token = window.localStorage.getItem('access_token');
+    token = window.localStorage.getItem("access_token");
     config = {
-      headers: { Authorization: `Bearer ${token}` }
-    }
+      headers: { Authorization: `Bearer ${token}` },
+    };
 
-      await axios.get("http://" + process.env.REACT_APP_server + "/api/users/me",
-      config
-      ).then(resp => this.setState({ userData: resp.data }) )
-      .catch(err => console.log(err))
-      
-      console.log(jwtDecode(token))
+    await axios
+      .get("http://" + process.env.REACT_APP_server + "/api/users/me", config)
+      .then((resp) => this.setState({ userData: resp.data }))
+      .catch((err) => console.log(err));
+
+    console.log(jwtDecode(token));
   }
 
   render() {
     return (
       <div className="container">
         <div className="home-page-container">
-          <h3><b>Personal Information</b></h3>
-            <div className="user-data-home">
-            User ID: <span className="user-data">{this.state.userData.id}</span><br/><br/>
-            Username: <span className="user-data">{this.state.userData.username}</span><br/><br/>
-            First Name: <span className="user-data">{this.state.userData.firstname}</span><br/><br/>
-            Last Name: <span className="user-data">{this.state.userData.lastname}</span><br/><br/>
-            Email: <span className="user-data">{this.state.userData.email}</span><br/><br/>
-            </div>
+          <h3>
+            <b>Personal Information</b>
+          </h3>
+          <div className="user-data-home">
+            User ID: <span className="user-data">{this.state.userData.id}</span>
+            <br />
+            <br />
+            Username:
+            <span className="user-data">{this.state.userData.username}</span>
+            <br />
+            <br />
+            First Name:
+            <span className="user-data">{this.state.userData.firstname}</span>
+            <br />
+            <br />
+            Last Name:
+            <span className="user-data">{this.state.userData.lastname}</span>
+            <br />
+            <br />
+            Email:
+            <span className="user-data">{this.state.userData.email}</span>
+            <br />
+            <br />
+          </div>
         </div>
       </div>
     );

@@ -12,20 +12,17 @@ let config = {};
 class ManageUsersPage extends Component {
   state = { usersData: [] };
 
-  
-
   async componentDidMount() {
     await checkJWT();
-    token = window.localStorage.getItem('access_token');
+    token = window.localStorage.getItem("access_token");
     config = {
-      headers: { Authorization: `Bearer ${token}` }
-    }
+      headers: { Authorization: `Bearer ${token}` },
+    };
 
-      await axios.get("http://" + process.env.REACT_APP_server + "/api/users/all",
-      config
-      ).then(resp => this.setState({ usersData: resp.data }) )
-      .catch(err => console.log(err))
-      
+    await axios
+      .get("http://" + process.env.REACT_APP_server + "/api/users/all", config)
+      .then((resp) => this.setState({ usersData: resp.data }))
+      .catch((err) => console.log(err));
   }
 
   render() {

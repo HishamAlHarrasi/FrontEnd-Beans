@@ -39,9 +39,7 @@ class UsersTable extends Component {
                   <td>{user.admin ? "Admin" : "Standard User"}</td>
                   <td
                     className={
-                      user.user_disabled
-                        ? "user-blocked"
-                        : "user-active"
+                      user.user_disabled ? "user-blocked" : "user-active"
                     }
                   >
                     {user.user_disabled ? "Blocked" : "Active"}

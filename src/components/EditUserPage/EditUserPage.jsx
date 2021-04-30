@@ -312,9 +312,6 @@ class EditUserPage extends Component {
                   <h4 className="align-center">
                     User BLOCKED <FontAwesomeIcon icon={faBan} />
                   </h4>
-                  <h6 className="align-left">
-                    Cause: Too many failed login attempts
-                  </h6>
                   <p className="align-left">
                     Always be careful when unblocking user accounts. Investigate
                     and check the cause for which the account was blocked in the

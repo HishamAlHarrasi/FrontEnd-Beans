@@ -27,7 +27,7 @@ class SignupPage extends Component {
     };
 
     axios
-      .get("http://" + process.env.REACT_APP_server + "/api/farms/all", config)
+      .get(process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/farms/all", config)
       .then((resp) => this.setState({ farms: resp.data }))
       .catch((err) => console.log(err));
   }
@@ -186,7 +186,7 @@ class SignupPage extends Component {
     console.log(userRegisterForm);
     request1 = await axios
       .post(
-        "http://" + process.env.REACT_APP_server + "/api/users/create",
+        process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/create",
         userRegisterForm,
         config
       )
@@ -204,7 +204,7 @@ class SignupPage extends Component {
     if (request1) {
       axios
         .post(
-          "http://" + process.env.REACT_APP_server + "/api/users/password",
+          process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/password",
           {
             token: this.state.passwordResetToken,
             password: password,

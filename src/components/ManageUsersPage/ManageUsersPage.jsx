@@ -20,7 +20,7 @@ class ManageUsersPage extends Component {
     };
 
     await axios
-      .get("http://" + process.env.REACT_APP_server + "/api/users/all", config)
+      .get(process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/all", config)
       .then((resp) => this.setState({ usersData: resp.data }))
       .catch((err) => console.log(err));
   }

@@ -50,8 +50,8 @@ class Navbar extends Component {
                   onClick={() => {
                     try {
                       let logout = axios.post(
-                        "http://" +
-                          process.env.REACT_APP_server +
+                        process.env.REACT_APP_SERVER_PROTO +
+                          process.env.REACT_APP_SERVER_ADDR +
                           "/auth/logout",
                         {},
                         { withCredentials: "include" }

@@ -26,7 +26,7 @@ const checkJWT = async () => {
 
       if (currentTime >= decoded.exp) {
         try {
-          const resp = await axios.post("http://" + process.env.REACT_APP_server + "/auth/refresh", {}, { withCredentials: "include" });
+          const resp = await axios.post(process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/auth/refresh", {}, { withCredentials: "include" });
           window.localStorage.setItem('access_token', resp.data.access_token);
           return resp;
         } catch (err) {

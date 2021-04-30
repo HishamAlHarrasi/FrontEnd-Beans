@@ -22,7 +22,7 @@ class LoginPage extends Component {
       window.localStorage.clear();
 
       const resp = await axios.post(
-        "http://" + process.env.REACT_APP_server + "/auth/login",
+        process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/auth/login",
         credentials,
         { withCredentials: true }
       );

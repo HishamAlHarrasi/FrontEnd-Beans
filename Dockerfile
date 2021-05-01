@@ -6,11 +6,12 @@ FROM tiangolo/node-frontend:10 as build-stage
 
 WORKDIR /app
 
-COPY package*.json /app/
+COPY beans-frontend/package*.json /app/
 
 RUN npm install
 
-COPY . /app
+COPY beans-frontend /app
+COPY frontend.env /app/.env
 
 RUN npm run build
 

@@ -31,7 +31,7 @@ class EditUserPage extends Component {
     });
 
     await axios
-      .get("http://" + process.env.REACT_APP_server + "/api/users/me", config)
+      .get(process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/me", config)
       .then((resp) => {
         console.log(resp);
         this.setState({ currentAdminID: resp.data.id });
@@ -39,7 +39,7 @@ class EditUserPage extends Component {
       .catch((err) => console.log(err));
 
     await axios
-      .get("http://" + process.env.REACT_APP_server + "/api/farms/all", config)
+      .get(process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/farms/all", config)
       .then((resp) => this.setState({ farms: resp.data }))
       .catch((err) => console.log(err));
 
@@ -98,7 +98,7 @@ class EditUserPage extends Component {
       changedValues.id = this.state.user.id;
       await axios
         .post(
-          "http://" + process.env.REACT_APP_server + "/api/users/update",
+          process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/update",
           changedValues,
           config
         )
@@ -323,8 +323,8 @@ class EditUserPage extends Component {
                       onClick={async () => {
                         await axios
                           .post(
-                            "http://" +
-                              process.env.REACT_APP_server +
+                            process.env.REACT_APP_SERVER_PROTO +
+                              process.env.REACT_APP_SERVER_ADDR +
                               `/api/users/${user.id}/unblock`,
                             {},
                             config
@@ -351,8 +351,8 @@ class EditUserPage extends Component {
                       onClick={async () => {
                         await axios
                           .post(
-                            "http://" +
-                              process.env.REACT_APP_server +
+                            process.env.REACT_APP_SERVER_PROTO +
+                              process.env.REACT_APP_SERVER_ADDR +
                               `/api/users/${user.id}/block`,
                             {},
                             config
@@ -424,8 +424,8 @@ class EditUserPage extends Component {
                         onClick={async () => {
                           await axios
                             .post(
-                              "http://" +
-                                process.env.REACT_APP_server +
+                              process.env.REACT_APP_SERVER_PROTO +
+                                process.env.REACT_APP_SERVER_ADDR +
                                 `/api/users/${user.id}/delete`,
                               {},
                               config

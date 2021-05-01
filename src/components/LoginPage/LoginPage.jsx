@@ -8,10 +8,9 @@ import checkJWT from "../shared/checkJWT";
 class LoginPage extends Component {
   state = {};
 
-// async componentDidMount() {
-//   await checkJWT()  
-// }
-
+  // async componentDidMount() {
+  //   await checkJWT()
+  // }
 
   login = async (e) => {
     e.preventDefault();
@@ -22,20 +21,19 @@ class LoginPage extends Component {
       window.localStorage.clear();
 
       const resp = await axios.post(
-        process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/auth/login",
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          "/auth/login",
         credentials,
         { withCredentials: true }
       );
 
-      console.log(resp);
       toast.success("Logged in Successfully");
-      window.localStorage.setItem('access_token', resp.data.access_token )
-      console.log(window.localStorage.getItem('access_token'))
+      window.localStorage.setItem("access_token", resp.data.access_token);
 
       window.location = "/home";
     } catch (err) {
       toast.error("Login Failed");
-      console.log(err);
     }
   };
 

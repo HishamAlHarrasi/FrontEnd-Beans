@@ -31,7 +31,12 @@ class EditUserPage extends Component {
     });
 
     await axios
-      .get(process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/me", config)
+      .get(
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          "/api/users/me",
+        config
+      )
       .then((resp) => {
         console.log(resp);
         this.setState({ currentAdminID: resp.data.id });
@@ -39,7 +44,12 @@ class EditUserPage extends Component {
       .catch((err) => console.log(err));
 
     await axios
-      .get(process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/farms/all", config)
+      .get(
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          "/api/farms/all",
+        config
+      )
       .then((resp) => this.setState({ farms: resp.data }))
       .catch((err) => console.log(err));
 
@@ -98,7 +108,9 @@ class EditUserPage extends Component {
       changedValues.id = this.state.user.id;
       await axios
         .post(
-          process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/update",
+          process.env.REACT_APP_SERVER_PROTO +
+            process.env.REACT_APP_SERVER_ADDR +
+            "/api/users/update",
           changedValues,
           config
         )
@@ -108,6 +120,13 @@ class EditUserPage extends Component {
             this.state.user.id === this.state.currentAdminID &&
             changedValues.username
           ) {
+            axios.post(
+              process.env.REACT_APP_SERVER_PROTO +
+                process.env.REACT_APP_SERVER_ADDR +
+                "/auth/logout",
+              {},
+              { withCredentials: "include" }
+            );
             window.localStorage.removeItem("access_token");
             window.location = "/login";
             toast.success("User updated successfully.");
@@ -119,7 +138,6 @@ class EditUserPage extends Component {
         .catch((err) => {
           console.log(err);
           toast.error("User update failed.");
-          console.log(changedValues);
         });
     } else {
       toast.error("You have not made any changes.");

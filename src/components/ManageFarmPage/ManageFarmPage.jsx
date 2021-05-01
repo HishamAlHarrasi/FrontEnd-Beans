@@ -15,7 +15,21 @@ import {
 import checkJWT from "../shared/checkJWT";
 
 export default class ManageFarmPage extends Component {
+  state = { farm: {}, tunnels: [] };
+
+  async componentDidMount() {
+    checkJWT();
+    this.setState({
+      tunnels: this.props.location.state.tunnels,
+      farm: this.props.location.state.farm,
+    });
+
+    // console.log(this.props.location.state.tunnels);
+  }
+
   render() {
+    console.log(this.state.tunnels);
+    console.log(this.state.farm);
     const data = [
       {
         name: "Page A",
@@ -88,7 +102,7 @@ export default class ManageFarmPage extends Component {
                       Live
                       <FontAwesomeIcon
                         icon={faCircle}
-                        style={{ color: "1ec31e", marginLeft: "8px" }}
+                        style={{ color: "#1ec31e", marginLeft: "8px" }}
                       />
                     </span>
                     <br />

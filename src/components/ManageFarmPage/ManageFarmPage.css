@@ -37,7 +37,7 @@
   height: 50px;
   align-self: center;
   margin-top: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   background-color: #e8e8e8;
   border-radius: 8px;
   padding: 5px;
@@ -74,6 +74,12 @@
 }
 
 .live-data-graphs {
+  width: 95%;
+  background-color: #e8e8e8;
+  border-radius: 8px;
+  padding-top: 3%;
+  padding-bottom: 4%;
+  align-self: center;
   margin-bottom: 270px;
 }
 
@@ -91,9 +97,30 @@
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 1);
   /* color: white; */
   font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
+.live-data-flex-childs-child {
+  padding: 10px;
+}
+
+.live-align-center {
+  text-align: center;
+}
+
 
 .live-data-graphs h3 {
   margin-left: 40px;
+  margin-bottom: 20px;
+}
+
+
+.farm-heading-manage-farms {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border-bottom: #0275d8 3px solid;
   margin-bottom: 20px;
 }

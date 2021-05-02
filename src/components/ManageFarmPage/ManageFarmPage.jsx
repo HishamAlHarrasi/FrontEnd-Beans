@@ -99,9 +99,19 @@ export default class ManageFarmPage extends Component {
             Go Back <FontAwesomeIcon icon={faArrowLeft} />
           </Link>
         </div>
+        <div>
+          <div className="container farm-heading-manage-farms">
+            <h3>
+              Farm Name: <b>{farm.name}</b>
+            </h3>
+            <h3>
+              Farm Location: <b>{farm.location}</b>
+            </h3>
+          </div>
+        </div>
         {tunnels.map((tunnel) => {
           return (
-            <div className="container" style={{ marginBottom: "50px" }}>
+            <div className="container" style={{ marginBottom: "20px" }}>
               <div key={tunnel}>
                 <h2>Tunnel {tunnel}</h2>
                 <div className="row-farm-page">
@@ -157,23 +167,38 @@ export default class ManageFarmPage extends Component {
                                 {node.sensors.map((sensor) => {
                                   return (
                                     <div className="live-data-flex-child">
-                                      <p>
-                                        Sensor:
-                                        <b>
-                                          {sensor.name.charAt(0).toUpperCase() +
-                                            sensor.name.slice(1)}
-                                        </b>
-                                      </p>
-                                      <p>
-                                        Accepted Range:
-                                        <b>
-                                          {sensor.min_threshold} -
-                                          {sensor.max_threshold}
-                                        </b>
-                                      </p>
-                                      <p>
-                                        Live Feed: <b>22</b>
-                                      </p>
+                                      <div className="live-data-flex-childs-child">
+                                        <p>Sensor:</p>
+                                        {sensor.name != "motion" ? (
+                                          <p>Accepted Range:</p>
+                                        ) : (
+                                          <div></div>
+                                        )}
+                                        <p>Live Feed:</p>
+                                      </div>
+                                      <div className="live-data-flex-childs-child live-align-center">
+                                        <p>
+                                          <b>
+                                            {sensor.name
+                                              .charAt(0)
+                                              .toUpperCase() +
+                                              sensor.name.slice(1)}
+                                          </b>
+                                        </p>
+                                        {sensor.name != "motion" ? (
+                                          <p>
+                                            <b>
+                                              {sensor.max_threshold} -
+                                              {sensor.min_threshold}
+                                            </b>
+                                          </p>
+                                        ) : (
+                                          <div></div>
+                                        )}
+                                        <p>
+                                          <b>XXX</b>
+                                        </p>
+                                      </div>
                                     </div>
                                   );
                                 })}

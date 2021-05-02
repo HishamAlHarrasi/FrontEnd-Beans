@@ -107,9 +107,9 @@ export default class FarmComponent extends Component {
                               }}
                             />
                           </div>
-                          <div className="general-row-inner">
+                          {/* <div className="general-row-inner">
                             <button className="btn btn-primary">Manage</button>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -138,9 +138,9 @@ export default class FarmComponent extends Component {
                               }}
                             />
                           </div>
-                          <div className="general-row-inner">
+                          {/* <div className="general-row-inner">
                             <button className="btn btn-primary">Manage</button>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -174,9 +174,9 @@ export default class FarmComponent extends Component {
                               }}
                             />
                           </div>
-                          <div className="general-row-inner">
+                          {/* <div className="general-row-inner">
                             <button className="btn btn-primary">Manage</button>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

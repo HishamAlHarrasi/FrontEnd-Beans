@@ -46,7 +46,7 @@ export default class ManageFarmPage extends Component {
   }
 
   render() {
-    const { farm, tunnels, nodes } = this.state;
+    const { farm, tunnels, nodes, canControl } = this.state;
     const data = [
       {
         name: "Page A",
@@ -166,39 +166,54 @@ export default class ManageFarmPage extends Component {
                               <div className="live-data-flex">
                                 {node.sensors.map((sensor) => {
                                   return (
-                                    <div className="live-data-flex-child">
-                                      <div className="live-data-flex-childs-child">
-                                        <p>Sensor:</p>
-                                        {sensor.name != "motion" ? (
-                                          <p>Accepted Range:</p>
-                                        ) : (
-                                          <div></div>
-                                        )}
-                                        <p>Live Feed:</p>
-                                      </div>
-                                      <div className="live-data-flex-childs-child live-align-center">
-                                        <p>
-                                          <b>
-                                            {sensor.name
-                                              .charAt(0)
-                                              .toUpperCase() +
-                                              sensor.name.slice(1)}
-                                          </b>
-                                        </p>
-                                        {sensor.name != "motion" ? (
-                                          <p>
-                                            <b>
-                                              {sensor.max_threshold} -
-                                              {sensor.min_threshold}
-                                            </b>
-                                          </p>
-                                        ) : (
-                                          <div></div>
-                                        )}
-                                        <p>
-                                          <b>XXX</b>
-                                        </p>
-                                      </div>
+                                    <div className="link-sensors-page">
+                                      <Link
+                                        to={{
+                                          pathname: `/farms/${farm.id}/${node.id}/${sensor.id}`,
+                                          state: {
+                                            farm: farm,
+                                            tunnel: tunnel,
+                                            node: node,
+                                            sensor: sensor,
+                                            canControl: canControl,
+                                          },
+                                        }}
+                                      >
+                                        <div className="live-data-flex-child">
+                                          <div className="live-data-flex-childs-child">
+                                            <p>Sensor:</p>
+                                            {sensor.name != "motion" ? (
+                                              <p>Accepted Range:</p>
+                                            ) : (
+                                              <div></div>
+                                            )}
+                                            <p>Live Feed:</p>
+                                          </div>
+                                          <div className="live-data-flex-childs-child live-align-center">
+                                            <p>
+                                              <b>
+                                                {sensor.name
+                                                  .charAt(0)
+                                                  .toUpperCase() +
+                                                  sensor.name.slice(1)}
+                                              </b>
+                                            </p>
+                                            {sensor.name != "motion" ? (
+                                              <p>
+                                                <b>
+                                                  {sensor.max_threshold} -
+                                                  {sensor.min_threshold}
+                                                </b>
+                                              </p>
+                                            ) : (
+                                              <div></div>
+                                            )}
+                                            <p>
+                                              <b>XXX</b>
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </Link>
                                     </div>
                                   );
                                 })}

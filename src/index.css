@@ -115,7 +115,7 @@ code {
   /* Green */
   border: solid 2px #0275d8;
   border-radius: 20px;
-  color: white;
+  color: #0275d8;
   margin-top: 10px;
   margin-left: 10px;
   padding: 5px 20px;
@@ -189,4 +189,21 @@ code {
 
 .error-label-pw-reset {
   width: 35%;
+}
+
+.sensor-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.graph {
+  margin-bottom: 100px;
+}
+
+
+.data-table-sensors {
+  margin-bottom: 120px;
+  width: 70%;
 }

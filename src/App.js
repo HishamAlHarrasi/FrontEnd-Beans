@@ -10,6 +10,7 @@ import ManageUsersPage from "./components/ManageUsersPage/ManageUsersPage";
 import EditUserPage from "./components/EditUserPage/EditUserPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import ManageFarmPage from "./components/ManageFarmPage/ManageFarmPage";
+import ManageSensorPage from "./components/ManageSensorPage/ManageSensorPage";
 import checkJWT from "./components/shared/checkJWT";
 import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,6 +37,10 @@ const App = () => {
             <Navbar />
             <div className="content">
               <Switch>
+                <Route
+                  path="/farms/:farmid/:nodeid/:sensorid"
+                  component={ManageSensorPage}
+                />
                 <Route path="/farms/:id" component={ManageFarmPage} />
                 <Route
                   path="/admin/manageUsers/:id"
@@ -65,7 +70,11 @@ const App = () => {
             <Navbar />
             <div className="content">
               <Switch>
-                <Route path="/farms/:id" component={ManageFarmPage} />
+                <Route
+                  path="/farms/:farmid/:nodeid/:sensorid"
+                  component={ManageSensorPage}
+                />
+                <Route path="/farms/:farmid" component={ManageFarmPage} />
                 <Route path="/farms" component={FarmsPage} />
                 <Route path="/notFound" component={NotFound} />
                 <Route

@@ -13,23 +13,40 @@ import {
   Tooltip,
 } from "recharts";
 import checkJWT from "../shared/checkJWT";
+import axios from "axios";
+
+let token = "";
+let config = {};
 
 export default class ManageFarmPage extends Component {
-  state = { farm: {}, tunnels: [] };
+  state = { farm: {}, tunnels: [], nodes: [], data: [], canControl: null };
 
   async componentDidMount() {
     checkJWT();
+    token = window.localStorage.getItem("access_token");
+    config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    await axios
+      .get(
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          `/api/farms/${this.props.location.state.farm.id}/nodes`,
+        config
+      )
+      .then((resp) => this.setState({ nodes: resp.data }))
+      .catch((err) => console.log(err));
+
     this.setState({
       tunnels: this.props.location.state.tunnels,
       farm: this.props.location.state.farm,
+      canControl: this.props.location.state.canControl,
     });
-
-    // console.log(this.props.location.state.tunnels);
   }
 
   render() {
-    console.log(this.state.tunnels);
-    console.log(this.state.farm);
+    const { farm, tunnels, nodes } = this.state;
     const data = [
       {
         name: "Page A",
@@ -74,7 +91,7 @@ export default class ManageFarmPage extends Component {
         amt: 2100,
       },
     ];
-    checkJWT();
+    console.log(nodes);
     return (
       <div>
         <div className="go-back">
@@ -82,53 +99,112 @@ export default class ManageFarmPage extends Component {
             Go Back <FontAwesomeIcon icon={faArrowLeft} />
           </Link>
         </div>
-        <div className="container">
-          <div>
-            <h2>Sensor 1</h2>
-            <div className="row-farm-page">
-              <div className="column-farm-page">
-                <div className="inside-row">
-                  <div className="inside-column">
-                    <span>Sensor Type:</span>
-                    <span>SensorID:</span>
-                    <span>Sensor Status:</span>
-                    <br />
-                    <span>Live Reading: </span>
+        {tunnels.map((tunnel) => {
+          return (
+            <div className="container" style={{ marginBottom: "50px" }}>
+              <div key={tunnel}>
+                <h2>Tunnel {tunnel}</h2>
+                <div className="row-farm-page">
+                  <div className="column-farm-page">
+                    {nodes.map((node, index) => {
+                      if (node.tunnel_id == tunnel) {
+                        return (
+                          <div className="node-parent">
+                            <div className="inside-row">
+                              <div>
+                                <span>Node ID: </span>
+                                <span>
+                                  <b>{node.id}</b>
+                                </span>
+                              </div>
+                              <div>
+                                <span>Sensors: </span>
+                                <span>
+                                  <b>
+                                    {node.sensors.map((sensor, index) => {
+                                      if (index == node.sensors.length - 1) {
+                                        return `${
+                                          sensor.name.charAt(0).toUpperCase() +
+                                          sensor.name.slice(1)
+                                        }`;
+                                      } else {
+                                        return `${
+                                          sensor.name.charAt(0).toUpperCase() +
+                                          sensor.name.slice(1)
+                                        } & `;
+                                      }
+                                    })}
+                                  </b>
+                                </span>
+                              </div>
+                              <div>
+                                <span>Node Status: </span>
+                                <span>
+                                  <b>Live</b>
+                                  <FontAwesomeIcon
+                                    icon={faCircle}
+                                    style={{
+                                      color: "#1ec31e",
+                                      marginLeft: "8px",
+                                    }}
+                                  />
+                                </span>
+                              </div>
+                            </div>
+                            <div className="live-data-graphs">
+                              <h3>Node {node.id} Live Data:</h3>
+                              <div className="live-data-flex">
+                                {node.sensors.map((sensor) => {
+                                  return (
+                                    <div className="live-data-flex-child">
+                                      <p>
+                                        Sensor:
+                                        <b>
+                                          {sensor.name.charAt(0).toUpperCase() +
+                                            sensor.name.slice(1)}
+                                        </b>
+                                      </p>
+                                      <p>
+                                        Accepted Range:
+                                        <b>
+                                          {sensor.min_threshold} -
+                                          {sensor.max_threshold}
+                                        </b>
+                                      </p>
+                                      <p>
+                                        Live Feed: <b>22</b>
+                                      </p>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+                    })}
+                    {/* <div className="graph-row">
+                      <LineChart
+                        width={830}
+                        height={250}
+                        data={data}
+                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                        >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Line type="monotone" dataKey="pv" stroke="#8884d8" />
+                        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                        </LineChart>
+                      </div> */}
                   </div>
-                  <div className="inside-column data-class">
-                    <span>Temperature</span>
-                    <span>12345</span>
-                    <span>
-                      Live
-                      <FontAwesomeIcon
-                        icon={faCircle}
-                        style={{ color: "#1ec31e", marginLeft: "8px" }}
-                      />
-                    </span>
-                    <br />
-                    <span id="live-reading">25 °C</span>
-                  </div>
-                </div>
-                <div className="graph-row">
-                  <LineChart
-                    width={730}
-                    height={250}
-                    data={data}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-                    <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                  </LineChart>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     );
   }

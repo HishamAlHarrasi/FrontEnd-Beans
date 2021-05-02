@@ -80,11 +80,15 @@ export default class FarmsPage extends Component {
           <h1>Farms Page</h1>
 
           {control_farms.map((farm) => {
-            return <FarmComponent key={farm.id} farm={farm} />;
+            return (
+              <FarmComponent key={farm.id} farm={farm} canControl={true} />
+            );
           })}
 
           {view_farms.map((farm) => {
-            return <FarmComponent key={farm.id} farm={farm} />;
+            return (
+              <FarmComponent key={farm.id} farm={farm} canControl={false} />
+            );
           })}
         </div>
       </div>

@@ -9,7 +9,7 @@ let token = "";
 let config = {};
 
 export default class FarmComponent extends Component {
-  state = { tunnels: [] };
+  state = { tunnels: [], allTunnels: [] };
 
   async componentDidMount() {
     token = window.localStorage.getItem("access_token");
@@ -34,13 +34,14 @@ export default class FarmComponent extends Component {
           }
         }
         this.setState({ tunnels: tunnels });
+        this.setState({ allTunnels: resp.data });
       })
       .catch((err) => console.error(err));
   }
 
   render() {
-    const { farm } = this.props;
-    const { tunnels } = this.state;
+    const { farm, canControl } = this.props;
+    const { tunnels, allTunnels } = this.state;
     console.log(farm);
     return (
       <div className="farm-container">
@@ -51,7 +52,8 @@ export default class FarmComponent extends Component {
                 pathname: `/farms/${farm.id}`,
                 state: {
                   farm: farm,
-                  tunnels: tunnels,
+                  tunnels: allTunnels,
+                  canControl: canControl,
                 },
               }}
             >
@@ -64,7 +66,10 @@ export default class FarmComponent extends Component {
                     Location: <b>{farm.location}</b>
                   </div>
                   <div className="heading-column">
-                    Status: <b>exampleText</b>
+                    Tunnels: <b>{allTunnels.length}</b>
+                  </div>
+                  <div className="heading-column">
+                    Status: <b>Live</b>
                     <FontAwesomeIcon
                       icon={faCircle}
                       style={{ color: "#1ec31e", marginLeft: "10px" }}
@@ -76,7 +81,7 @@ export default class FarmComponent extends Component {
             {tunnels.map((tunnelFormat) => {
               if (tunnelFormat.length == 2) {
                 return (
-                  <div className="inner-row-heading">
+                  <div className="inner-row-heading" key={tunnelFormat}>
                     <div className="inner-column">
                       <h5 id="bold">Tunnel {tunnelFormat[0]}</h5>
                       <div className="general-row">
@@ -143,7 +148,7 @@ export default class FarmComponent extends Component {
                 );
               } else if (tunnelFormat.length == 1) {
                 return (
-                  <div className="inner-row-heading">
+                  <div className="inner-row-heading" key={tunnelFormat}>
                     <div className="inner-column">
                       <h5 id="bold">Tunnel {tunnelFormat[0]}</h5>
                       <div className="general-row">

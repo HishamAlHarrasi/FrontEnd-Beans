@@ -21,29 +21,36 @@
   padding: 5px;
 }
 
+.node-parent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .inside-row {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  width: 40%;
+  justify-content: space-evenly;
+  /* flex-wrap: wrap; */
+  width: 95%;
+  height: 50px;
   align-self: center;
   margin-top: 20px;
   margin-bottom: 30px;
   background-color: #e8e8e8;
   border-radius: 8px;
   padding: 5px;
+  padding-top: 15px;
 }
 
 .inside-column {
-  justify-content: space-evenly;
   display: flex;
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 1;
+  flex-direction: row;
   margin: 5px;
   padding-top: 10px;
   padding-bottom: 10px;
-  align-self: center;
+  margin-left: 30px;
 }
 
 .graph-row {
@@ -64,4 +71,29 @@
 
 #live-reading {
   color: red;
+}
+
+.live-data-graphs {
+  margin-bottom: 270px;
+}
+
+.live-data-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.live-data-flex-child {
+  padding: 20px;
+  background-color: white;
+  border: #0275d8 2px solid;
+  border-radius: 3px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 1);
+  /* color: white; */
+  font-size: 20px;
+}
+
+.live-data-graphs h3 {
+  margin-left: 40px;
+  margin-bottom: 20px;
 }

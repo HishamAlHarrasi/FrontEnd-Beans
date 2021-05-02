@@ -54,7 +54,7 @@ class LoginPage extends Component {
               <button className="btn btn-light">Login</button>
               <br />
               <br />
-              <h6>
+              <h6 style={{ textAlign: "center" }}>
                 * Note: If you do not have an account, <br />
                 contact an administrator.
               </h6>

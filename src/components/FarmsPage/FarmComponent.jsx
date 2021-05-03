@@ -121,8 +121,8 @@ export default class FarmComponent extends Component {
                               }
                             })}
                           </span>
-                          <span className="live-data">A</span>
-                          <span className="live-data">No Motion</span>
+                          {/* <span className="live-data">A</span>
+                          <span className="live-data">No Motion</span> */}
                         </div>
                         <div className="general-column">
                           <div className="general-row-inner">
@@ -155,7 +155,7 @@ export default class FarmComponent extends Component {
                           <span className="live-data">
                             {nodes.map((node) => {
                               // CHANGE THIS LATER
-                              if (tunnelFormat[0] == node.tunnel_id) {
+                              if (tunnelFormat[1] == node.tunnel_id) {
                                 return (
                                   <div>
                                     {node.sensors.map((sensor) => {
@@ -171,8 +171,8 @@ export default class FarmComponent extends Component {
                               }
                             })}
                           </span>
-                          <span className="live-data">A</span>
-                          <span className="live-data">No Motion</span>
+                          {/* <span className="live-data">A</span>
+                          <span className="live-data">No Motion</span> */}
                         </div>
                         <div className="general-column">
                           <div className="general-row-inner">
@@ -227,8 +227,8 @@ export default class FarmComponent extends Component {
                             })}
                           </span>
                           {/* <span className="live-data">_</span>
-                          <span className="live-data">A</span>
-                          <span className="live-data">No Motion</span> */}
+                          // <span className="live-data">A</span>
+                          // <span className="live-data">No Motion</span> */}
                         </div>
                         <div className="general-column">
                           <div className="general-row-inner">

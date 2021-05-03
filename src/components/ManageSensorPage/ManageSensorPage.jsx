@@ -19,6 +19,7 @@ let config = {};
 
 export default class ManageSensorPage extends Component {
   state = { data: [] };
+  interval = null;
 
   async componentDidMount() {
     checkJWT();
@@ -35,6 +36,13 @@ export default class ManageSensorPage extends Component {
       )
       .then((resp) => this.setState({ data: resp.data }))
       .catch((err) => console.log(err));
+    this.interval = setInterval(() => {
+      console.log("test");
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
@@ -78,7 +86,7 @@ export default class ManageSensorPage extends Component {
                 </LineChart>
               </div>
               <div className="sensor-table data-table-sensors">
-                <table class="table table-striped table-hover">
+                <table className="table table-striped table-hover">
                   <thead>
                     <tr>
                       <th scope="col">Time</th>
@@ -87,7 +95,7 @@ export default class ManageSensorPage extends Component {
                   </thead>
                   {data.map((datapoint) => {
                     return (
-                      <tbody>
+                      <tbody key={datapoint.timestamp}>
                         <tr>
                           <th scope="row">{datapoint.timestamp}</th>
                           <td>{datapoint.value}</td>

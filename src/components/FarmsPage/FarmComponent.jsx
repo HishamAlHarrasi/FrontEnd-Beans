@@ -9,7 +9,7 @@ let token = "";
 let config = {};
 
 export default class FarmComponent extends Component {
-  state = { tunnels: [], allTunnels: [] };
+  state = { tunnels: [], allTunnels: [], nodes: [] };
 
   async componentDidMount() {
     token = window.localStorage.getItem("access_token");
@@ -37,12 +37,22 @@ export default class FarmComponent extends Component {
         this.setState({ allTunnels: resp.data });
       })
       .catch((err) => console.error(err));
+
+    await axios
+      .get(
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          `/api/farms/${this.props.farm.id}/nodes`,
+        config
+      )
+      .then((resp) => this.setState({ nodes: resp.data }))
+      .catch((err) => console.log(err));
   }
 
   render() {
     const { farm, canControl } = this.props;
-    const { tunnels, allTunnels } = this.state;
-    console.log(farm);
+    const { tunnels, allTunnels, nodes } = this.state;
+    console.log(nodes);
     return (
       <div className="farm-container">
         <div className="row">
@@ -86,12 +96,31 @@ export default class FarmComponent extends Component {
                       <h5 id="bold">Tunnel {tunnelFormat[0]}</h5>
                       <div className="general-row">
                         <div className="general-column">
-                          <span id="bold">Live Feed:</span>
+                          <span id="bold">Sensors in Tunnel:</span>
+                          {/* <span id="bold">Avg Live Feed:</span>
                           <span>Light (Lux):</span>
-                          <span>Motion:</span>
+                          <span>Motion:</span> */}
                         </div>
                         <div className="general-column">
-                          <span className="live-data">_</span>
+                          <span className="live-data">
+                            {nodes.map((node) => {
+                              // CHANGE THIS LATER
+                              if (tunnelFormat[0] == node.tunnel_id) {
+                                return (
+                                  <div>
+                                    {node.sensors.map((sensor) => {
+                                      return (
+                                        <p>{`${
+                                          sensor.name.charAt(0).toUpperCase() +
+                                          sensor.name.slice(1)
+                                        }`}</p>
+                                      );
+                                    })}
+                                  </div>
+                                );
+                              }
+                            })}
+                          </span>
                           <span className="live-data">A</span>
                           <span className="live-data">No Motion</span>
                         </div>
@@ -117,12 +146,31 @@ export default class FarmComponent extends Component {
                       <h5 id="bold">Tunnel {tunnelFormat[1]}</h5>
                       <div className="general-row">
                         <div className="general-column">
-                          <span id="bold">Live Feed:</span>
+                          <span id="bold">Sensors in Tunnel:</span>
+                          {/* <span id="bold">Avg Live Feed:</span>
                           <span>Light (Lux):</span>
-                          <span>Motion:</span>
+                          <span>Motion:</span> */}
                         </div>
                         <div className="general-column">
-                          <span className="live-data">_</span>
+                          <span className="live-data">
+                            {nodes.map((node) => {
+                              // CHANGE THIS LATER
+                              if (tunnelFormat[0] == node.tunnel_id) {
+                                return (
+                                  <div>
+                                    {node.sensors.map((sensor) => {
+                                      return (
+                                        <p>{`${
+                                          sensor.name.charAt(0).toUpperCase() +
+                                          sensor.name.slice(1)
+                                        }`}</p>
+                                      );
+                                    })}
+                                  </div>
+                                );
+                              }
+                            })}
+                          </span>
                           <span className="live-data">A</span>
                           <span className="live-data">No Motion</span>
                         </div>
@@ -153,14 +201,34 @@ export default class FarmComponent extends Component {
                       <h5 id="bold">Tunnel {tunnelFormat[0]}</h5>
                       <div className="general-row">
                         <div className="general-column">
-                          <span id="bold">Live Feed:</span>
+                          <span id="bold">Sensors in Tunnel:</span>
+                          {/* <span id="bold">Avg Live Feed:</span>
                           <span>Light (Lux):</span>
-                          <span>Motion:</span>
+                          <span>Motion:</span> */}
                         </div>
                         <div className="general-column">
-                          <span className="live-data">_</span>
+                          <span className="live-data">
+                            {nodes.map((node) => {
+                              // CHANGE THIS LATER
+                              if (tunnelFormat[0] == node.tunnel_id) {
+                                return (
+                                  <div>
+                                    {node.sensors.map((sensor) => {
+                                      return (
+                                        <p>{`${
+                                          sensor.name.charAt(0).toUpperCase() +
+                                          sensor.name.slice(1)
+                                        }`}</p>
+                                      );
+                                    })}
+                                  </div>
+                                );
+                              }
+                            })}
+                          </span>
+                          {/* <span className="live-data">_</span>
                           <span className="live-data">A</span>
-                          <span className="live-data">No Motion</span>
+                          <span className="live-data">No Motion</span> */}
                         </div>
                         <div className="general-column">
                           <div className="general-row-inner">

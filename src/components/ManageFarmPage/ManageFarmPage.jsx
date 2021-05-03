@@ -19,7 +19,25 @@ let token = "";
 let config = {};
 
 export default class ManageFarmPage extends Component {
-  state = { farm: {}, tunnels: [], nodes: [], data: [], canControl: null };
+  state = { farm: {}, tunnels: [], nodes: [], live_data: {}, canControl: null };
+
+  liveUpdate = async () => {
+    for (let node of this.state.nodes) {
+      await axios
+        .get(
+          process.env.REACT_APP_SERVER_PROTO +
+            process.env.REACT_APP_SERVER_ADDR +
+            `/api/nodes/${node.id}/latest`,
+          config
+        )
+        .then((resp) => {
+          let live_data_clone = this.state.live_data;
+          live_data_clone[node.id] = resp.data;
+          this.setState({ live_data: live_data_clone });
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
   async componentDidMount() {
     checkJWT();
@@ -38,60 +56,32 @@ export default class ManageFarmPage extends Component {
       .then((resp) => this.setState({ nodes: resp.data }))
       .catch((err) => console.log(err));
 
+    let live_data = {};
+    for (let node of this.state.nodes) {
+      live_data[node.id] = [];
+    }
+
     this.setState({
       tunnels: this.props.location.state.tunnels,
       farm: this.props.location.state.farm,
       canControl: this.props.location.state.canControl,
+      live_data: live_data,
     });
+
+    this.liveUpdate();
+
+    this.interval = setInterval(async () => {
+      this.liveUpdate();
+    }, 6000); // Get live data every 6 seconds
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
-    const { farm, tunnels, nodes, canControl } = this.state;
-    const data = [
-      {
-        name: "Page A",
-        uv: 4000,
-        pv: 2400,
-        amt: 2400,
-      },
-      {
-        name: "Page B",
-        uv: 3000,
-        pv: 1398,
-        amt: 2210,
-      },
-      {
-        name: "Page C",
-        uv: 2000,
-        pv: 9800,
-        amt: 2290,
-      },
-      {
-        name: "Page D",
-        uv: 2780,
-        pv: 3908,
-        amt: 2000,
-      },
-      {
-        name: "Page E",
-        uv: 1890,
-        pv: 4800,
-        amt: 2181,
-      },
-      {
-        name: "Page F",
-        uv: 2390,
-        pv: 3800,
-        amt: 2500,
-      },
-      {
-        name: "Page G",
-        uv: 3490,
-        pv: 4300,
-        amt: 2100,
-      },
-    ];
-    console.log(nodes);
+    const { farm, tunnels, nodes, live_data, canControl } = this.state;
+    console.log(live_data);
     return (
       <div>
         <div className="go-back">
@@ -162,7 +152,9 @@ export default class ManageFarmPage extends Component {
                               </div>
                             </div>
                             <div className="live-data-graphs">
-                              <h3>Node {node.id} Live Data:</h3>
+                              <h3>
+                                <b> Node {node.id} </b> Live Data:
+                              </h3>
                               <div className="live-data-flex">
                                 {node.sensors.map((sensor) => {
                                   return (
@@ -201,7 +193,7 @@ export default class ManageFarmPage extends Component {
                                             {sensor.name != "motion" ? (
                                               <p>
                                                 <b>
-                                                  {sensor.max_threshold} -
+                                                  {sensor.max_threshold} -{" "}
                                                   {sensor.min_threshold}
                                                 </b>
                                               </p>
@@ -209,7 +201,9 @@ export default class ManageFarmPage extends Component {
                                               <div></div>
                                             )}
                                             <p>
-                                              <b>XXX</b>
+                                              <b>
+                                                {live_data[node.id][sensor.id]}
+                                              </b>
                                             </p>
                                           </div>
                                         </div>
@@ -223,22 +217,6 @@ export default class ManageFarmPage extends Component {
                         );
                       }
                     })}
-                    {/* <div className="graph-row">
-                      <LineChart
-                        width={830}
-                        height={250}
-                        data={data}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                        >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-                        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                        </LineChart>
-                      </div> */}
                   </div>
                 </div>
               </div>

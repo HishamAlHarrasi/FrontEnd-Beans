@@ -81,7 +81,7 @@ export default class ManageFarmPage extends Component {
 
   render() {
     const { farm, tunnels, nodes, live_data, canControl } = this.state;
-    console.log(live_data);
+
     return (
       <div>
         <div className="go-back">

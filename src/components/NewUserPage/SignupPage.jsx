@@ -27,7 +27,12 @@ class SignupPage extends Component {
     };
 
     axios
-      .get(process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/farms/all", config)
+      .get(
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          "/api/farms/all",
+        config
+      )
       .then((resp) => this.setState({ farms: resp.data }))
       .catch((err) => console.log(err));
   }
@@ -43,7 +48,6 @@ class SignupPage extends Component {
       name: null, // The name of the farm
       canControl: false, // If control is true, privilege is control & view, if false privilege is only view
     };
-    console.log(window.localStorage.getItem("access_token"));
 
     tempUserPrivileges.push(newPrivilege);
 
@@ -182,11 +186,12 @@ class SignupPage extends Component {
     if (errors) return;
 
     let request1 = false;
-    let request2 = false;
-    console.log(userRegisterForm);
+
     request1 = await axios
       .post(
-        process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/create",
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          "/api/users/create",
         userRegisterForm,
         config
       )
@@ -199,12 +204,12 @@ class SignupPage extends Component {
         return false;
       });
 
-    console.log(this.state.passwordResetToken, password);
-
     if (request1) {
       axios
         .post(
-          process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/password",
+          process.env.REACT_APP_SERVER_PROTO +
+            process.env.REACT_APP_SERVER_ADDR +
+            "/api/users/password",
           {
             token: this.state.passwordResetToken,
             password: password,
@@ -212,7 +217,6 @@ class SignupPage extends Component {
           config
         )
         .then((resp) => {
-          console.log(resp);
           window.location = "/admin/manageUsers";
           toast.success("User account created successfully!");
         })

@@ -52,7 +52,7 @@ export default class FarmComponent extends Component {
   render() {
     const { farm, canControl } = this.props;
     const { tunnels, allTunnels, nodes } = this.state;
-    console.log(nodes);
+
     return (
       <div className="farm-container">
         <div className="row">

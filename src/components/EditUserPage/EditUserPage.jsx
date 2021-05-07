@@ -38,7 +38,6 @@ class EditUserPage extends Component {
         config
       )
       .then((resp) => {
-        console.log(resp);
         this.setState({ currentAdminID: resp.data.id });
       })
       .catch((err) => console.log(err));
@@ -115,7 +114,6 @@ class EditUserPage extends Component {
           config
         )
         .then((resp) => {
-          console.log(changedValues);
           if (
             this.state.user.id === this.state.currentAdminID &&
             changedValues.username

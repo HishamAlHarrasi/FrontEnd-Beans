@@ -23,11 +23,14 @@ class HomePage extends Component {
     };
 
     await axios
-      .get(process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/me", config)
+      .get(
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          "/api/users/me",
+        config
+      )
       .then((resp) => this.setState({ userData: resp.data }))
       .catch((err) => console.log(err));
-
-    console.log(jwtDecode(token));
   }
 
   resetPassword = async (event) => {
@@ -62,7 +65,9 @@ class HomePage extends Component {
 
     await axios
       .get(
-        process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/password/reset",
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          "/api/users/password/reset",
         config
       )
       .then((resp) =>
@@ -72,7 +77,9 @@ class HomePage extends Component {
 
     await axios
       .post(
-        process.env.REACT_APP_SERVER_PROTO + process.env.REACT_APP_SERVER_ADDR + "/api/users/password",
+        process.env.REACT_APP_SERVER_PROTO +
+          process.env.REACT_APP_SERVER_ADDR +
+          "/api/users/password",
         { token: this.state.passwordResetToken, password: password },
         config
       )

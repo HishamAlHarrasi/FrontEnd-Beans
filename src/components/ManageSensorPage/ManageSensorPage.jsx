@@ -36,9 +36,6 @@ export default class ManageSensorPage extends Component {
       )
       .then((resp) => this.setState({ data: resp.data }))
       .catch((err) => console.log(err));
-    this.interval = setInterval(() => {
-      console.log("test");
-    }, 2000);
   }
 
   componentWillUnmount() {
@@ -54,7 +51,7 @@ export default class ManageSensorPage extends Component {
       canControl,
     } = this.props.location.state;
     const { data } = this.state;
-    console.log(this.state.data);
+
     return (
       <div>
         <div

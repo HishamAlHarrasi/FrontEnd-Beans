@@ -35,6 +35,7 @@ export default class ManageFarmPage extends Component {
           let live_data_clone = this.state.live_data;
           live_data_clone[node.id] = resp.data;
           this.setState({ live_data: live_data_clone });
+          console.log(resp);
         })
         .catch((err) => console.log(err));
     }
@@ -69,6 +70,25 @@ export default class ManageFarmPage extends Component {
             : toast.error("Actuator activation failed");
         })
         .catch((err) => console.log(err));
+    }
+  };
+
+  calculateStatusColors = (latest_timestamp) => {
+    let now = Date.now();
+
+    if (latest_timestamp === undefined) {
+      return "red";
+    }
+
+    if (now - latest_timestamp > 600000) {
+      // More than 10 Minutes
+      return "red";
+    } else if (now - latest_timestamp > 120000) {
+      // More than 2 Minutes
+      return "yellow";
+    } else {
+      // 2 Minutes and less
+      return "#1ec31e";
     }
   };
 
@@ -180,7 +200,9 @@ export default class ManageFarmPage extends Component {
                                   <FontAwesomeIcon
                                     icon={faCircle}
                                     style={{
-                                      color: "#1ec31e",
+                                      color: this.calculateStatusColors(
+                                        live_data[node.id].latest_timestamp
+                                      ),
                                       marginLeft: "8px",
                                     }}
                                   />

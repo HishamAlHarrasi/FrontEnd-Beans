@@ -87,7 +87,6 @@ export default class ManageSensorPage extends Component {
                   <XAxis dataKey="timestamp" label="Time"></XAxis>
                   <YAxis dataKey="value" label={sensor.name} />
                   <Tooltip />
-                  {/* <Legend /> */}
                   <Line type="monotone" dataKey="value" stroke="#8884d8" />
                 </LineChart>
               </div>

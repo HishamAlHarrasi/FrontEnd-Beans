@@ -276,8 +276,8 @@ export default class ManageFarmPage extends Component {
                                                 {sensor.name != "motion" ? (
                                                   <p>
                                                     <b>
-                                                      {sensor.max_threshold} -{" "}
-                                                      {sensor.min_threshold}
+                                                      {sensor.min_threshold} -{" "}
+                                                      {sensor.max_threshold}
                                                     </b>
                                                   </p>
                                                 ) : (

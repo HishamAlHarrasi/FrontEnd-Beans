@@ -14,6 +14,7 @@ import {
 } from "recharts";
 import checkJWT from "../shared/checkJWT";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 let token = "";
 let config = {};
@@ -34,6 +35,38 @@ export default class ManageFarmPage extends Component {
           let live_data_clone = this.state.live_data;
           live_data_clone[node.id] = resp.data;
           this.setState({ live_data: live_data_clone });
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  activateActuator = async (e, node, sensor) => {
+    e.preventDefault();
+    console.log(sensor);
+    let actuatorTime = e.target[0].value;
+
+    if (actuatorTime == "") {
+      toast.error("Please set actuator activation time");
+      return;
+    } else if (actuatorTime <= 0) {
+      toast.error("Actuator activation time must be larger than 0");
+      return;
+    } else {
+      axios
+        .post(
+          process.env.REACT_APP_SERVER_PROTO +
+            process.env.REACT_APP_SERVER_ADDR +
+            `/api/nodes/${node.id}/commands/new`,
+          {
+            actuator_id: sensor.max_act,
+            timeout: actuatorTime,
+          },
+          config
+        )
+        .then((resp) => {
+          resp.data === "SUCCESS"
+            ? toast.success("Actuator activated succesfully")
+            : toast.error("Actuator activation failed");
         })
         .catch((err) => console.log(err));
     }
@@ -98,6 +131,9 @@ export default class ManageFarmPage extends Component {
               Farm Location: <b>{farm.location}</b>
             </h3>
           </div>
+          <p className="note-p">
+            * Note: Click on each sensor to view its past data.
+          </p>
         </div>
         {tunnels.map((tunnel) => {
           return (
@@ -158,56 +194,102 @@ export default class ManageFarmPage extends Component {
                               <div className="live-data-flex">
                                 {node.sensors.map((sensor) => {
                                   return (
-                                    <div className="link-sensors-page">
-                                      <Link
-                                        to={{
-                                          pathname: `/farms/${farm.id}/${node.id}/${sensor.id}`,
-                                          state: {
-                                            farm: farm,
-                                            tunnel: tunnel,
-                                            node: node,
-                                            sensor: sensor,
-                                            canControl: canControl,
-                                          },
-                                        }}
-                                      >
-                                        <div className="live-data-flex-child">
-                                          <div className="live-data-flex-childs-child">
-                                            <p>Sensor:</p>
-                                            {sensor.name != "motion" ? (
-                                              <p>Accepted Range:</p>
-                                            ) : (
-                                              <div></div>
-                                            )}
-                                            <p>Live Feed:</p>
-                                          </div>
-                                          <div className="live-data-flex-childs-child live-align-center">
-                                            <p>
-                                              <b>
-                                                {sensor.name
-                                                  .charAt(0)
-                                                  .toUpperCase() +
-                                                  sensor.name.slice(1)}
-                                              </b>
-                                            </p>
-                                            {sensor.name != "motion" ? (
-                                              <p>
-                                                <b>
-                                                  {sensor.max_threshold} -{" "}
-                                                  {sensor.min_threshold}
-                                                </b>
-                                              </p>
-                                            ) : (
-                                              <div></div>
-                                            )}
-                                            <p>
-                                              <b>
-                                                {live_data[node.id][sensor.id]}
-                                              </b>
-                                            </p>
-                                          </div>
+                                    <div>
+                                      <div className="link-sensors-page">
+                                        <div className="sensor-placeholder">
+                                          <Link
+                                            to={{
+                                              pathname: `/farms/${farm.id}/${node.id}/${sensor.id}`,
+                                              state: {
+                                                farm: farm,
+                                                tunnel: tunnel,
+                                                node: node,
+                                                sensor: sensor,
+                                                canControl: canControl,
+                                              },
+                                            }}
+                                          >
+                                            <div className="live-data-flex-child">
+                                              <div className="live-data-flex-childs-child">
+                                                <p>Sensor:</p>
+                                                {sensor.name != "motion" ? (
+                                                  <p>Accepted Range:</p>
+                                                ) : (
+                                                  <div></div>
+                                                )}
+                                                <p>Live Feed:</p>
+                                              </div>
+                                              <div className="live-data-flex-childs-child live-align-center">
+                                                <p>
+                                                  <b>
+                                                    {sensor.name
+                                                      .charAt(0)
+                                                      .toUpperCase() +
+                                                      sensor.name.slice(1)}
+                                                  </b>
+                                                </p>
+                                                {sensor.name != "motion" ? (
+                                                  <p>
+                                                    <b>
+                                                      {sensor.max_threshold} -{" "}
+                                                      {sensor.min_threshold}
+                                                    </b>
+                                                  </p>
+                                                ) : (
+                                                  <div></div>
+                                                )}
+                                                <p>
+                                                  <b>
+                                                    {live_data[node.id][
+                                                      sensor.id
+                                                    ] == null
+                                                      ? "No Data"
+                                                      : live_data[node.id][
+                                                          sensor.id
+                                                        ]}
+                                                  </b>
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </Link>
+                                          {canControl == true ? (
+                                            <div className="send-commands">
+                                              <hr />
+                                              <form
+                                                onSubmit={(e) => {
+                                                  this.activateActuator(
+                                                    e,
+                                                    node,
+                                                    sensor
+                                                  );
+                                                }}
+                                              >
+                                                <p>
+                                                  {" "}
+                                                  Actuator Activation Time (s)
+                                                </p>
+                                                <input
+                                                  type="number"
+                                                  style={{
+                                                    width: "100px",
+                                                    marginLeft: "20px",
+                                                  }}
+                                                />
+                                                <br />
+                                                <button
+                                                  type="submit"
+                                                  className="btn btn-primary btn-md"
+                                                  style={{ margin: "20px" }}
+                                                >
+                                                  Activate Actuator
+                                                </button>
+                                              </form>
+                                            </div>
+                                          ) : (
+                                            <div></div>
+                                          )}
                                         </div>
-                                      </Link>
+                                      </div>
                                     </div>
                                   );
                                 })}

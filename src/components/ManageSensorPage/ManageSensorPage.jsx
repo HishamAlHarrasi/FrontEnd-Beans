@@ -21,12 +21,7 @@ export default class ManageSensorPage extends Component {
   state = { data: [] };
   interval = null;
 
-  async componentDidMount() {
-    checkJWT();
-    token = window.localStorage.getItem("access_token");
-    config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
+  liveUpdate = async () => {
     await axios
       .get(
         process.env.REACT_APP_SERVER_PROTO +
@@ -36,6 +31,20 @@ export default class ManageSensorPage extends Component {
       )
       .then((resp) => this.setState({ data: resp.data }))
       .catch((err) => console.log(err));
+  };
+
+  async componentDidMount() {
+    checkJWT();
+    token = window.localStorage.getItem("access_token");
+    config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    this.liveUpdate();
+
+    this.interval = setInterval(async () => {
+      this.liveUpdate();
+    }, 6000); // Get live data every 6 seconds
   }
 
   componentWillUnmount() {

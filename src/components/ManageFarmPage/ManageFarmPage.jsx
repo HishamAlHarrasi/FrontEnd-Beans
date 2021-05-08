@@ -85,10 +85,29 @@ export default class ManageFarmPage extends Component {
       return "red";
     } else if (now - latest_timestamp > 120000) {
       // More than 2 Minutes
-      return "yellow";
+      return "#caa80e";
     } else {
       // 2 Minutes and less
       return "#1ec31e";
+    }
+  };
+
+  calculateStatusText = (latest_timestamp) => {
+    let now = Date.now();
+
+    if (latest_timestamp === undefined) {
+      return "No Connection";
+    }
+
+    if (now - latest_timestamp > 600000) {
+      // More than 10 Minutes
+      return "No data in more than 10 minutes";
+    } else if (now - latest_timestamp > 120000) {
+      // More than 2 Minutes
+      return "No data in more than 2 minutes";
+    } else {
+      // 2 Minutes and less
+      return "Live";
     }
   };
 
@@ -196,7 +215,11 @@ export default class ManageFarmPage extends Component {
                               <div>
                                 <span>Node Status: </span>
                                 <span>
-                                  <b>Live</b>
+                                  <b>
+                                    {this.calculateStatusText(
+                                      live_data[node.id].latest_timestamp
+                                    )}
+                                  </b>
                                   <FontAwesomeIcon
                                     icon={faCircle}
                                     style={{

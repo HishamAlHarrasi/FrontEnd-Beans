@@ -200,6 +200,8 @@ code {
 
 .graph {
   margin-bottom: 100px;
+  padding: 100px;
+  border: #0275d8 solid 3px;
 }
 
 

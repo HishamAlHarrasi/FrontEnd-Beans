@@ -12,6 +12,7 @@ import {
   Legend,
   Line,
   Tooltip,
+  Label,
 } from "recharts";
 
 let token = "";
@@ -84,8 +85,17 @@ export default class ManageSensorPage extends Component {
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="timestamp" label="Time"></XAxis>
-                  <YAxis dataKey="value" label={sensor.name} />
+                  <XAxis dataKey="timestamp">
+                    <Label value="Time" dy={10} position="centerBottom" />
+                  </XAxis>
+                  <YAxis dataKey="value">
+                    <Label
+                      value={sensor.name}
+                      dy={120}
+                      position="insideTopLeft"
+                      angle={-90}
+                    />
+                  </YAxis>
                   <Tooltip />
                   <Line type="monotone" dataKey="value" stroke="#8884d8" />
                 </LineChart>

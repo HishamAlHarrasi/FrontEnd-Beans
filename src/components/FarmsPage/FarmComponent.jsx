@@ -125,7 +125,7 @@ export default class FarmComponent extends Component {
                         </div>
                         <div className="general-column">
                           <div className="general-row-inner">
-                            <p>Node Count:</p>
+                            <b>Node Count:</b>
                             <b style={{ marginLeft: "20px" }}>
                               {this.countNodesInTunnel(tunnelFormat[0])}
                             </b>
@@ -161,7 +161,7 @@ export default class FarmComponent extends Component {
                         </div>
                         <div className="general-column">
                           <div className="general-row-inner">
-                            <p>Node Count:</p>
+                            <b>Node Count:</b>
                             <b style={{ marginLeft: "20px" }}>
                               {this.countNodesInTunnel(tunnelFormat[1])}
                             </b>
@@ -202,7 +202,7 @@ export default class FarmComponent extends Component {
                         </div>
                         <div className="general-column">
                           <div className="general-row-inner">
-                            <p>Node Count:</p>
+                            <b>Node Count:</b>
                             <b style={{ marginLeft: "20px" }}>
                               {this.countNodesInTunnel(tunnelFormat[0])}
                             </b>

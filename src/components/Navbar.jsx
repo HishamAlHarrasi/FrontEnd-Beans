@@ -25,11 +25,12 @@ class Navbar extends Component {
         <nav>
           <ul>
             <li>
+              {/*Using NavLink's provides ability of giving current route a certain color, in this case white  */}
               <NavLink exact to="/home" activeStyle={{ color: "#ffffff" }}>
                 Home
               </NavLink>
             </li>
-            {this.state.isAdmin ? (
+            {this.state.isAdmin ? ( // Renders only if user is an admin
               <li>
                 <NavLink to="/admin" activeStyle={{ color: "#ffffff" }}>
                   Admin

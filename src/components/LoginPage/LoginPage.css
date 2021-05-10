@@ -1,4 +1,5 @@
 .background-image {
+  /* Background Image Reference: https://unsplash.com/photos/vrbZVyX2k4I */
   background-image: url(../../images/markus-spiske-vrbZVyX2k4I-unsplash.jpg);
   background-size: cover;
   background-repeat: no-repeat;
@@ -21,7 +22,6 @@
   padding: 30px;
   border-radius: 10px;
   text-align: center;
-  backdrop-filter: blur(10px);
 }
 
 .form-login h6 {

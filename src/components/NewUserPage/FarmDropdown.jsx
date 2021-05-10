@@ -15,7 +15,7 @@ const FarmDropdown = (props) => {
       >
         {userPrivilege.id === null
           ? "Choose Remote Farm"
-          : farms[farms.findIndex((x) => x.id === userPrivilege.id)].name +
+          : farms[farms.findIndex((x) => x.id === userPrivilege.id)].name + // Set it up so that when user chooses a farm, their choice is now the one that is presented as the dropdown title - Good for UX
             ", " +
             farms[farms.findIndex((x) => x.id === userPrivilege.id)].location}
       </button>

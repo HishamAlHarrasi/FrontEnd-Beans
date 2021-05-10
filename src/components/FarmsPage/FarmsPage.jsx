@@ -42,7 +42,7 @@ export default class FarmsPage extends Component {
         .then((resp) => {
           let view_farms = [];
           let control_farms = [];
-
+          // Split all the farms for a standard user into two groups: a group which they can control and view, and a group which they can only view
           for (let farm of this.state.farms) {
             for (let userFarm of resp.data.view_farms) {
               if (farm.id === userFarm.id) {

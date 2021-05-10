@@ -8,10 +8,6 @@ import checkJWT from "../shared/checkJWT";
 class LoginPage extends Component {
   state = {};
 
-  // async componentDidMount() {
-  //   await checkJWT()
-  // }
-
   login = async (e) => {
     e.preventDefault();
 

@@ -11,27 +11,24 @@ import EditUserPage from "./components/EditUserPage/EditUserPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import ManageFarmPage from "./components/ManageFarmPage/ManageFarmPage";
 import ManageSensorPage from "./components/ManageSensorPage/ManageSensorPage";
-import checkJWT from "./components/shared/checkJWT";
-import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
+import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-const App = () => {
-  let access_token = window.localStorage.getItem("access_token");
-  // let decoded = jwtDecode(access_token);
+// This is the main connector of the application
 
+const App = () => {
   return (
     <div>
       <>
-        <ToastContainer
+        <ToastContainer // Setting up toastify notifications
           draggable={false}
           transition={Zoom}
           autoClose={5000}
           preventDuplicates
         />
       </>
-      {window.localStorage.getItem("access_token") !== null ? (
+      {window.localStorage.getItem("access_token") !== null ? ( // Renders different routes based on users access level
         jwtDecode(window.localStorage.getItem("access_token")).admin ? (
           <div>
             <Navbar />

@@ -107,6 +107,7 @@ class SignupPage extends Component {
     const isAdmin = event.target[7].checked;
     const farmPrivileges = userPrivileges;
 
+    // Input validation and checking
     if (firstName.trim() === "") errors.firstName = "First name is required.";
     if (lastName.trim() === "") errors.lastName = "Last name is required.";
     if (username.trim() === "") errors.username = "Username is required.";
@@ -157,6 +158,7 @@ class SignupPage extends Component {
     let userRegisterForm = {};
 
     if (!event.target[7].checked) {
+      // If standard user, inputs the farm privileges into the JSON object, if admin leaves farm privileges empty as they are granted by default
       userRegisterForm = {
         firstname: event.target[0].value,
         lastname: event.target[1].value,

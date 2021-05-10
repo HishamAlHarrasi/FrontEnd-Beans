@@ -28,7 +28,7 @@ const FarmPrivileges = (props) => {
         <tbody>
           {userPrivileges.map((userPrivilege, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>
                   <FarmDropdown
@@ -43,7 +43,7 @@ const FarmPrivileges = (props) => {
                     type="radio"
                     name={index}
                     className="table-radio"
-                    checked={!userPrivilege.canControl}
+                    defaultChecked={!userPrivilege.canControl}
                     onClick={() => onChangeFarmPrivileges(index)} // Changes the access rights - View, or View & Control
                   />
                   <label htmlFor="View" className="table-radio-label">
@@ -53,7 +53,7 @@ const FarmPrivileges = (props) => {
                     type="radio"
                     name={index}
                     className="table-radio"
-                    checked={userPrivilege.canControl}
+                    defaultChecked={userPrivilege.canControl}
                     onClick={() => onChangeFarmPrivileges(index)} // Changes the access rights - View, or View & Control
                   />
                   <label htmlFor="View" className="table-radio-label">

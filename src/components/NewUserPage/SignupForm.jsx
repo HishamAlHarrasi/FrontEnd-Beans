@@ -124,6 +124,10 @@ const SignupForm = (props) => {
             <label className="form-label lbl">Admin</label>
           </div>
         </div>
+        <p style={{ color: "red", marginTop: "20px" }}>
+          * Note: If user is an <b>admin</b> , they get control privileges to
+          all farms by default.
+        </p>{" "}
         <div className="farm-privileges-table">
           <FarmPrivileges
             farms={farms}

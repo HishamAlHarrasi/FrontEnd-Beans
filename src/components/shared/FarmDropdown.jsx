@@ -4,9 +4,9 @@ const FarmDropdown = (props) => {
   const { farms, userPrivilege, index, onEditFarm } = props;
 
   return (
-    <div class="dropdown">
+    <div className="dropdown">
       <button
-        class="btn btn-secondary dropdown-toggle"
+        className="btn btn-secondary dropdown-toggle"
         type="button"
         id="dropdownMenuButton"
         data-toggle="dropdown"
@@ -15,11 +15,11 @@ const FarmDropdown = (props) => {
       >
         {userPrivilege.id === null ? "Choose Remote Farm" : userPrivilege.name}
       </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {farms.map((farm) => {
           return (
             <a
-              class="dropdown-item"
+              className="dropdown-item"
               onClick={() => {
                 onEditFarm(farm.id, index);
               }}

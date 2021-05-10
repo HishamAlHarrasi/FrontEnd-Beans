@@ -35,15 +35,15 @@ export default class ManageFarmPage extends Component {
           let live_data_clone = this.state.live_data;
           live_data_clone[node.id] = resp.data;
           this.setState({ live_data: live_data_clone });
-          console.log(resp);
         })
         .catch((err) => console.log(err));
     }
   };
 
   activateActuator = async (e, node, sensor) => {
+    // Function to get validate and get the time set to activate the actuator, and then send the activation request
     e.preventDefault();
-    console.log(sensor);
+
     let actuatorTime = e.target[0].value;
 
     if (actuatorTime == "") {
@@ -85,7 +85,7 @@ export default class ManageFarmPage extends Component {
       return "red";
     } else if (now - latest_timestamp > 120000) {
       // More than 2 Minutes
-      return "#caa80e";
+      return "#eeb61b";
     } else {
       // 2 Minutes and less
       return "#1ec31e";

@@ -1,5 +1,5 @@
-import React, { Component, useState } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faBan } from "@fortawesome/free-solid-svg-icons";
 import "./EditUserPage.css";
@@ -76,6 +76,7 @@ class EditUserPage extends Component {
   }
 
   checkChangedAndSubmit = async (event, userPrivileges) => {
+    // Checks which input fields have data, and submits to the processor
     event.preventDefault();
     let changedValues = {};
 
@@ -104,6 +105,7 @@ class EditUserPage extends Component {
     }
 
     if (Object.keys(changedValues).length !== 0) {
+      // Checking that the user has inputted something into the input fields
       changedValues.id = this.state.user.id;
       await axios
         .post(
@@ -147,7 +149,6 @@ class EditUserPage extends Component {
   };
 
   handleCreateNewPrivilege = () => {
-    // Probably should change this - View & Control by defenition includes view privilege
     const { userPrivileges } = this.state;
 
     let tempUserPrivileges = [...userPrivileges];
